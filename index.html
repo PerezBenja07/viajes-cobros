@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viajes y Cobros</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #0f766e, #134e4a);
+      min-height: 100vh;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      margin-bottom: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    .logout-btn {
+      border: none;
+      background: #334155;
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 7px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover { background: #475569; }
+
+    .counters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .counter {
+      flex: 1;
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .counter .amount {
+      display: block;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .counter .label {
+      font-size: 13px;
+      letter-spacing: 1px;
+      opacity: 0.75;
+    }
+
+    .counter.collected .amount { color: #15803d; }
+    .counter.pending .amount { color: #dc2626; }
+
+    .counter.total {
+      background: #fff7ed;
+      border: 2px solid #f59e0b;
+    }
+
+    .counter.total .amount { color: #b45309; }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .precio-wrapper {
+      position: relative;
+    }
+
+    .precio-wrapper .precio-prefix {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      font-weight: bold;
+      color: #475569;
+    }
+
+    .precio-wrapper input {
+      padding-left: 24px;
+    }
+
+    .status-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .status-btn {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      background: #f8fafc;
+      cursor: pointer;
+    }
+
+    .status-btn.cobrado.selected {
+      background: #dcfce7;
+      border-color: #15803d;
+      color: #15803d;
+    }
+
+    .status-btn.pendiente.selected {
+      background: #fee2e2;
+      border-color: #dc2626;
+      color: #dc2626;
+    }
+
+    .add-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #0f766e;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .add-btn:hover { background: #0d5e58; }
+
+    h2 {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .trip-list {
+      list-style: none;
+    }
+
+    .trip-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .trip-info {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .trip-route {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .trip-price {
+      font-size: 14px;
+      color: #475569;
+    }
+
+    .trip-badge {
+      font-size: 13px;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .trip-badge.cobrado { background: #dcfce7; color: #15803d; }
+    .trip-badge.pendiente { background: #fee2e2; color: #dc2626; }
+
+    .delete-btn {
+      border: none;
+      background: #fee2e2;
+      color: #dc2626;
+      font-size: 14px;
+      font-weight: bold;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-left: 8px;
+      flex: none;
+    }
+
+    .delete-btn:hover { background: #fecaca; }
+
+    .pay-btn {
+      border: none;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 6px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      flex: none;
+      margin-left: 6px;
+    }
+
+    .pay-btn:hover { background: #bae6fd; }
+
+    .pay-control {
+      display: flex;
+      gap: 4px;
+      margin-left: 6px;
+      flex: none;
+      align-items: center;
+    }
+
+    .pay-input {
+      width: 76px;
+      padding: 6px;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #f8fafc;
+    }
+
+    .pay-ok {
+      border: none;
+      background: #15803d;
+      color: #fff;
+      font-weight: bold;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .abono-line {
+      font-size: 13px;
+      color: #0369a1;
+      font-weight: bold;
+    }
+
+    .empty {
+      text-align: center;
+      color: #e2e8f0;
+      padding: 20px;
+    }
+
+    .login-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .login-screen[hidden] { display: none; }
+
+    .auth-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .auth-card h1 {
+      color: #0f766e;
+      margin-bottom: 16px;
+    }
+
+    .auth-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #334155;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .auth-card input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      margin-bottom: 12px;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 42px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 4px;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .password-toggle:hover { color: #0f766e; }
+
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .auth-btn.primary {
+      background: #0f766e;
+      color: #fff;
+    }
+
+    .auth-btn.primary:hover { background: #0d5e58; }
+    .auth-btn.primary:disabled { opacity: 0.6; cursor: wait; }
+
+    .auth-btn.secondary {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    .auth-btn.secondary:hover { background: #e2e8f0; }
+
+    .auth-message {
+      min-height: 20px;
+      font-size: 14px;
+      color: #dc2626;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="loginScreen" class="login-screen" hidden>
+    <div class="auth-card">
+      <h1>Viajes y Cobros</h1>
+      <div class="auth-title" id="authTitle">Iniciar sesión</div>
+      <input type="email" id="authEmail" name="email" placeholder="Correo electrónico" autocomplete="email">
+      <div class="password-wrapper">
+        <input type="password" id="authPassword" name="password" placeholder="Contraseña" autocomplete="current-password">
+        <button type="button" class="password-toggle" id="authTogglePassword" aria-label="Mostrar contraseña">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="auth-message" id="authMessage"></div>
+      <button type="button" class="auth-btn primary" id="authSubmit">Iniciar sesión</button>
+      <button type="button" class="auth-btn secondary" id="authToggle">¿No tienes cuenta? Crear cuenta</button>
+    </div>
+  </div>
+
+  <div class="app" id="app" hidden>
+    <div class="header">
+      <h1>Viajes y Cobros</h1>
+      <button class="logout-btn" id="logoutBtn">Salir</button>
+    </div>
+
+    <div class="counter total">
+      <span class="amount" id="totalACobrar">$0</span>
+      <span class="label">A COBRAR</span>
+    </div>
+
+    <div class="counters">
+      <div class="counter collected">
+        <span class="amount" id="totalCobrado">$0</span>
+        <span class="label">TOTAL COBRADO</span>
+      </div>
+      <div class="counter pending">
+        <span class="amount" id="totalPendiente">$0</span>
+        <span class="label">POR COBRAR</span>
+      </div>
+    </div>
+
+    <form class="card" id="viajeForm">
+      <div class="form-group">
+        <label for="ruta">Ruta</label>
+        <input type="text" id="ruta" placeholder="Ej. Centro - Mercado" required>
+      </div>
+      <div class="form-group">
+        <label for="precio">Precio</label>
+        <div class="precio-wrapper">
+          <span class="precio-prefix">$</span>
+          <input type="text" id="precio" inputmode="decimal" placeholder="0" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Estado</label>
+        <div class="status-buttons" id="statusButtons">
+          <button type="button" class="status-btn cobrado" data-estado="cobrado">Cobrado</button>
+          <button type="button" class="status-btn pendiente selected" data-estado="pendiente">Pendiente</button>
+        </div>
+      </div>
+      <div class="form-group" id="abonoGroup">
+        <label for="abono">Abono (ya pagado)</label>
+        <div class="precio-wrapper">
+          <span class="precio-prefix">$</span>
+          <input type="text" id="abono" inputmode="decimal" placeholder="0">
+        </div>
+      </div>
+      <button type="submit" class="add-btn">Agregar Viaje</button>
+    </form>
+
+    <h2>Viajes</h2>
+    <ul class="trip-list" id="tripList"></ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    function cargarSupabaseAlternativo() {
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/@supabase/supabase-js@2';
+      s.onload = iniciarApp;
+      s.onerror = function () {
+        var m = document.getElementById('authMessage');
+        if (m) m.textContent = 'No se pudo cargar Supabase. Revisa tu conexión a internet.';
+      };
+      document.head.appendChild(s);
+    }
+
+    function iniciarApp() {
+    const SUPABASE_URL = 'https://vvcomsxnqdhbkqqqktwd.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2Y29tc3hucWRoYmtxcXFrdHdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMTI2NzUsImV4cCI6MjEwMTY4ODY3NX0.E1UwnaH9eNO2egip3hSmQk4MzDPaWKxpFf0gIAK7jRI';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false }
+    });
+
+    let viajes = [];
+    let estadoSeleccionado = 'pendiente';
+    let authMode = 'login';
+
+    const loginScreen = document.getElementById('loginScreen');
+    const app = document.getElementById('app');
+    const authTitle = document.getElementById('authTitle');
+    const authEmail = document.getElementById('authEmail');
+    const authPassword = document.getElementById('authPassword');
+    const authMessage = document.getElementById('authMessage');
+    const authSubmit = document.getElementById('authSubmit');
+    const authToggle = document.getElementById('authToggle');
+    const authTogglePassword = document.getElementById('authTogglePassword');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const form = document.getElementById('viajeForm');
+    const rutaInput = document.getElementById('ruta');
+    const precioInput = document.getElementById('precio');
+    const abonoInput = document.getElementById('abono');
+    const abonoGroup = document.getElementById('abonoGroup');
+    const statusButtons = document.querySelectorAll('.status-btn');
+    const tripList = document.getElementById('tripList');
+    const totalCobrado = document.getElementById('totalCobrado');
+    const totalPendiente = document.getElementById('totalPendiente');
+    const totalACobrar = document.getElementById('totalACobrar');
+
+    function money(n) {
+      const partes = Number(n).toFixed(2).split('.');
+      const entero = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      return '$' + entero + ',' + partes[1];
+    }
+
+    function formatPrecioInput(v) {
+      v = v.replace(/\./g, '').replace(/[^0-9,]/g, '');
+      const idx = v.lastIndexOf(',');
+      let decimal = '';
+      let entero = v;
+      if (idx > -1) {
+        decimal = v.slice(idx + 1);
+        entero = v.slice(0, idx);
+      }
+      if (entero.length > 0) {
+        entero = parseInt(entero, 10).toString();
+      }
+      entero = entero.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      let out = entero.length > 0 ? entero : '0';
+      if (idx > -1) {
+        out = out + ',' + decimal.slice(0, 2);
+      }
+      return out;
+    }
+
+    function parsePrecio(v) {
+      return parseFloat(v.replace(/\./g, '').replace(',', '.'));
+    }
+
+    function msjError(error) {
+      const m = error.message || 'Ocurrió un error';
+      if (m.indexOf('Invalid login credentials') !== -1) return 'Correo o contraseña incorrectos';
+      if (m.indexOf('already registered') !== -1) return 'Ese correo ya tiene una cuenta';
+      if (m.indexOf('at least') !== -1) return 'La contraseña debe tener al menos 6 caracteres';
+      if (m.indexOf('Invalid email') !== -1) return 'El correo no es válido';
+      return m;
+    }
+
+    const DATOS_GUARDADOS_KEY = 'viajes_credenciales';
+
+    function recordarDatos(email) {
+      try {
+        localStorage.setItem(DATOS_GUARDADOS_KEY, JSON.stringify({ email: email }));
+      } catch (e) { }
+    }
+
+    function cargarDatosGuardados() {
+      try {
+        var s = localStorage.getItem(DATOS_GUARDADOS_KEY);
+        return s ? JSON.parse(s) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function showLogin() {
+      loginScreen.hidden = false;
+      app.hidden = true;
+      var guardados = cargarDatosGuardados();
+      if (guardados && !authEmail.value) {
+        authEmail.value = guardados.email || '';
+      }
+    }
+
+    function showApp() {
+      loginScreen.hidden = true;
+      app.hidden = false;
+      cargarViajes();
+    }
+
+    function setAuthMode(mode) {
+      authMode = mode;
+      authTitle.textContent = mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta';
+      authSubmit.textContent = mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta';
+      authToggle.textContent = mode === 'login' ? '¿No tienes cuenta? Crear cuenta' : '¿Ya tienes cuenta? Iniciar sesión';
+      authPassword.setAttribute('autocomplete', mode === 'login' ? 'current-password' : 'new-password');
+    }
+
+    async function cargarViajes() {
+      tripList.innerHTML = '<li class="empty">Cargando...</li>';
+      const { data, error } = await supabase
+        .from('viajes')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) {
+        tripList.innerHTML = '<li class="empty">No se pudieron cargar los viajes</li>';
+        console.error(error);
+        return;
+      }
+      viajes = data;
+      render();
+    }
+
+    function render() {
+      let cobrado = 0;
+      let pendiente = 0;
+      viajes.forEach(function (v) {
+        const abono = Math.min(v.abono || 0, v.precio);
+        if (v.estado === 'cobrado') {
+          cobrado += v.precio;
+        } else {
+          cobrado += abono;
+          pendiente += v.precio - abono;
+        }
+      });
+      totalCobrado.textContent = money(cobrado);
+      totalPendiente.textContent = money(pendiente);
+      totalACobrar.textContent = money(pendiente);
+
+      tripList.innerHTML = '';
+      if (viajes.length === 0) {
+        tripList.innerHTML = '<li class="empty">Aún no hay viajes registrados</li>';
+        return;
+      }
+      viajes.forEach(function (v) {
+        const li = document.createElement('li');
+        li.className = 'trip-item';
+        const abono = Math.min(v.abono || 0, v.precio);
+
+        const info = document.createElement('div');
+        info.className = 'trip-info';
+        const route = document.createElement('div');
+        route.className = 'trip-route';
+        route.textContent = v.ruta;
+        const price = document.createElement('div');
+        price.className = 'trip-price';
+        price.textContent = money(v.precio);
+        info.appendChild(route);
+        info.appendChild(price);
+
+        if (v.estado === 'pendiente' && abono > 0) {
+          const abonoLine = document.createElement('div');
+          abonoLine.className = 'abono-line';
+          abonoLine.textContent = 'Pagado ' + money(abono) + ' · Falta ' + money(v.precio - abono);
+          info.appendChild(abonoLine);
+        }
+
+        const badge = document.createElement('span');
+        badge.className = 'trip-badge ' + v.estado;
+        badge.textContent = v.estado === 'cobrado' ? 'Cobrado' : 'Pendiente';
+
+        const del = document.createElement('button');
+        del.className = 'delete-btn';
+        del.textContent = '✕';
+        del.addEventListener('click', function (e) {
+          e.stopPropagation();
+          eliminarViaje(v.id);
+        });
+
+        li.appendChild(info);
+        li.appendChild(badge);
+
+        if (v.estado === 'pendiente') {
+          const pay = document.createElement('div');
+          pay.className = 'pay-control';
+          const payBtn = document.createElement('button');
+          payBtn.className = 'pay-btn';
+          payBtn.textContent = 'Abonar';
+          payBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            pay.innerHTML = '';
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.inputMode = 'decimal';
+            input.className = 'pay-input';
+            input.placeholder = 'Monto';
+            const ok = document.createElement('button');
+            ok.className = 'pay-ok';
+            ok.textContent = 'OK';
+            ok.addEventListener('click', function (e2) {
+              e2.stopPropagation();
+              const monto = parsePrecio(input.value);
+              if (!isNaN(monto) && monto > 0) {
+                actualizarViaje(v.id, { abono: Math.min((v.abono || 0) + monto, v.precio) });
+              }
+            });
+            input.addEventListener('input', function () {
+              const f = formatPrecioInput(this.value);
+              if (this.value !== f) { this.value = f; }
+            });
+            input.addEventListener('keydown', function (e3) {
+              if (e3.key === 'Enter') ok.click();
+            });
+            input.addEventListener('click', function (e4) { e4.stopPropagation(); });
+            pay.appendChild(input);
+            pay.appendChild(ok);
+            input.focus();
+          });
+          pay.appendChild(payBtn);
+          li.appendChild(pay);
+        }
+
+        li.appendChild(del);
+        li.addEventListener('click', function () {
+          const nuevo = v.estado === 'cobrado' ? 'pendiente' : 'cobrado';
+          actualizarViaje(v.id, { estado: nuevo });
+        });
+        tripList.appendChild(li);
+      });
+    }
+
+    async function actualizarViaje(id, cambios) {
+      const { error } = await supabase.from('viajes').update(cambios).eq('id', id);
+      if (error) console.error(error);
+      cargarViajes();
+    }
+
+    async function eliminarViaje(id) {
+      const { error } = await supabase.from('viajes').delete().eq('id', id);
+      if (error) console.error(error);
+      cargarViajes();
+    }
+
+    statusButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        statusButtons.forEach(function (b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        estadoSeleccionado = btn.dataset.estado;
+        abonoGroup.style.display = estadoSeleccionado === 'pendiente' ? '' : 'none';
+      });
+    });
+
+    precioInput.addEventListener('input', function () {
+      const formatted = formatPrecioInput(this.value);
+      if (this.value !== formatted) {
+        this.value = formatted;
+        this.setSelectionRange(this.value.length, this.value.length);
+      }
+    });
+
+    abonoInput.addEventListener('input', function () {
+      const formatted = formatPrecioInput(this.value);
+      if (this.value !== formatted) {
+        this.value = formatted;
+        this.setSelectionRange(this.value.length, this.value.length);
+      }
+    });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const ruta = rutaInput.value.trim();
+      const precio = parsePrecio(precioInput.value);
+      if (!ruta || isNaN(precio) || precio < 0) return;
+      const abonoParcial = estadoSeleccionado === 'pendiente' ? parsePrecio(abonoInput.value) : 0;
+      const abono = (!isNaN(abonoParcial) && abonoParcial > 0) ? Math.min(abonoParcial, precio) : 0;
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { error } = await supabase.from('viajes').insert({
+        user_id: user.id,
+        ruta: ruta,
+        precio: precio,
+        estado: estadoSeleccionado,
+        abono: abono
+      });
+      if (error) console.error(error);
+      form.reset();
+      cargarViajes();
+    });
+
+    authToggle.addEventListener('click', function () {
+      setAuthMode(authMode === 'login' ? 'register' : 'login');
+      authMessage.textContent = '';
+    });
+
+    const ojoAbierto = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    const ojoCerrado = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+    authTogglePassword.addEventListener('click', function () {
+      const esPassword = authPassword.type === 'password';
+      authPassword.type = esPassword ? 'text' : 'password';
+      authTogglePassword.setAttribute('aria-label', esPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+      authTogglePassword.innerHTML = esPassword ? ojoCerrado : ojoAbierto;
+    });
+
+    authSubmit.addEventListener('click', async function () {
+      const email = authEmail.value.trim();
+      const password = authPassword.value;
+      authMessage.textContent = '';
+      if (!email || !password) {
+        authMessage.textContent = 'Escribe tu correo y tu contraseña';
+        return;
+      }
+      authSubmit.disabled = true;
+      try {
+        if (authMode === 'login') {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) {
+            authMessage.textContent = msjError(error);
+            return;
+          }
+          recordarDatos(email);
+        } else {
+          const { data, error } = await supabase.auth.signUp({ email, password });
+          if (error) {
+            authMessage.textContent = msjError(error);
+            return;
+          }
+          recordarDatos(email);
+          if (!data.session) {
+            authMessage.textContent = 'Cuenta creada. Ahora inicia sesión.';
+            setAuthMode('login');
+            return;
+          }
+        }
+      } catch (e) {
+        authMessage.textContent = 'Error: ' + (e.message || e);
+      } finally {
+        authSubmit.disabled = false;
+      }
+    });
+
+    logoutBtn.addEventListener('click', async function () {
+      await supabase.auth.signOut();
+    });
+
+    supabase.auth.onAuthStateChange(function (event, session) {
+      if (session) {
+        showApp();
+      } else {
+        showLogin();
+      }
+    });
+
+    supabase.auth.getSession().then(function ({ data }) {
+      if (data.session) {
+        showApp();
+      } else {
+        showLogin();
+      }
+    });
+    }
+
+    if (typeof window.supabase !== 'undefined') {
+      iniciarApp();
+    } else {
+      cargarSupabaseAlternativo();
+    }
+  </script>
+</body>
+</html>
