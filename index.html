@@ -1196,6 +1196,8 @@
 
     function msjError(error) {
       const m = error.message || 'Ocurrió un error';
+      const ml = m.toLowerCase();
+      if (ml.indexOf('rate limit') !== -1) return 'Se superó el límite de correos. Esperá un rato y volvé a intentarlo.';
       if (m.indexOf('Invalid login credentials') !== -1) return 'Correo o contraseña incorrectos';
       if (m.indexOf('already registered') !== -1) return 'Ese correo ya tiene una cuenta';
       if (m.indexOf('at least') !== -1) return 'La contraseña debe tener al menos 6 caracteres';
