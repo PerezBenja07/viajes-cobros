@@ -83,13 +83,6 @@
     .counter.collected .amount { color: #15803d; }
     .counter.pending .amount { color: #dc2626; }
 
-    .counter.total {
-      background: #fff7ed;
-      border: 2px solid #f59e0b;
-    }
-
-    .counter.total .amount { color: #b45309; }
-
     .card {
       background: #fff;
       border-radius: 12px;
@@ -179,6 +172,15 @@
 
     .add-btn:hover { background: #0d5e58; }
 
+    .form-msg {
+      min-height: 20px;
+      font-size: 14px;
+      color: #dc2626;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
     h2 {
       color: #fff;
       font-size: 18px;
@@ -257,6 +259,92 @@
     }
 
     .pay-btn:hover { background: #bae6fd; }
+
+    .edit-btn {
+      border: none;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 14px;
+      font-weight: bold;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-left: 6px;
+      flex: none;
+    }
+
+    .edit-btn:hover { background: #e2e8f0; }
+
+    .cancel-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #f1f5f9;
+      color: #334155;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .cancel-btn:hover { background: #e2e8f0; }
+
+    .form-msg.ok { color: #15803d; }
+
+    .filtros {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .filtro-btn {
+      flex: 1;
+      padding: 8px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      background: #f8fafc;
+      color: #334155;
+      cursor: pointer;
+    }
+
+    .filtro-btn.selected {
+      background: #0f766e;
+      border-color: #0f766e;
+      color: #fff;
+    }
+
+    .filtro-mes {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .filtro-mes input[type="month"] {
+      flex: 1;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .filtro-limpiar {
+      border: none;
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .filtro-limpiar:hover { background: #cbd5e1; }
 
     .pay-control {
       display: flex;
@@ -397,6 +485,180 @@
       margin-bottom: 10px;
       text-align: center;
     }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .menu-option {
+      background: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 22px 18px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .menu-option:hover {
+      background: #f0fdfa;
+      transform: translateY(-2px);
+    }
+
+    .menu-option .menu-icon {
+      display: block;
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .menu-option .menu-title {
+      display: block;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0f766e;
+      letter-spacing: 1px;
+    }
+
+    .menu-option .menu-sub {
+      display: block;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    .menu-balance {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .menu-balance-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+
+    .menu-balance-label {
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #64748b;
+    }
+
+    .balance-toggle {
+      border: none;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .balance-toggle:hover { background: #e2e8f0; }
+
+    .menu-balance-amount {
+      display: block;
+      font-size: 34px;
+      font-weight: bold;
+      color: #0f766e;
+    }
+
+    .menu-balance-amount.negativo { color: #dc2626; }
+
+    .trip-empresa {
+      font-size: 13px;
+      color: #0f766e;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    .trip-date {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .trip-gastos {
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .trip-gastos.positivo { color: #15803d; }
+    .trip-gastos.negativo { color: #dc2626; }
+
+    .card h2 {
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .gasto-resumen {
+      background: #fff7ed;
+      border: 2px solid #f59e0b;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      margin-bottom: 16px;
+    }
+
+    .gasto-resumen .amount {
+      display: block;
+      font-size: 28px;
+      font-weight: bold;
+      color: #b45309;
+    }
+
+    .gasto-resumen .label {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: #b45309;
+      opacity: 0.75;
+    }
+
+    .cat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+
+    .cat-row:last-child { border-bottom: none; }
+
+    .cat-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      color: #334155;
+    }
+
+    .cat-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .cat-amount {
+      font-weight: bold;
+      color: #334155;
+    }
   </style>
 </head>
 <body>
@@ -417,15 +679,100 @@
     </div>
   </div>
 
+  <div class="app" id="menuScreen" hidden>
+    <div class="header">
+      <h1>Viajes y Cobros</h1>
+      <button class="logout-btn" id="menuLogoutBtn">Salir</button>
+    </div>
+
+    <div class="menu-balance">
+      <div class="menu-balance-header">
+        <span class="menu-balance-label">TOTAL GANADO</span>
+        <button type="button" class="balance-toggle" id="balanceToggle" title="Ocultar total">Ocultar</button>
+      </div>
+      <span class="menu-balance-amount" id="balanceAmount">$0</span>
+    </div>
+
+    <div class="menu">
+      <button type="button" class="menu-option" id="menuViajesBtn">
+        <span class="menu-icon">🚚</span>
+        <span class="menu-title">VIAJES</span>
+        <span class="menu-sub">Administra tus viajes y cobros</span>
+      </button>
+      <button type="button" class="menu-option" id="menuGastosBtn">
+        <span class="menu-icon">💸</span>
+        <span class="menu-title">MIS GASTOS</span>
+        <span class="menu-sub">Lleva el control de tus gastos</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="app" id="gastosScreen" hidden>
+    <div class="header">
+      <h1>Mis Gastos</h1>
+      <button class="logout-btn" id="gastosBackBtn">Menú</button>
+    </div>
+
+    <div class="gasto-resumen">
+      <span class="amount" id="gastosMes">$0</span>
+      <span class="label">GASTADO ESTE MES</span>
+    </div>
+
+    <div class="card">
+      <h2>Por categoría</h2>
+      <div id="gastosCategorias"></div>
+    </div>
+
+    <form class="card" id="gastoForm">
+      <div class="form-group">
+        <label for="gastoDescripcion">Descripción</label>
+        <input type="text" id="gastoDescripcion" placeholder="Ej. Combustible 200L" required>
+      </div>
+      <div class="form-group">
+        <label for="gastoMonto">Monto</label>
+        <div class="precio-wrapper">
+          <span class="precio-prefix">$</span>
+          <input type="text" id="gastoMonto" inputmode="decimal" placeholder="0" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="gastoCategoria">Categoría</label>
+        <select id="gastoCategoria">
+          <option value="combustible">Combustible</option>
+          <option value="peajes">Peajes</option>
+          <option value="comida">Comida</option>
+          <option value="alojamiento">Alojamiento</option>
+          <option value="mantenimiento">Mantenimiento</option>
+          <option value="multas">Multas</option>
+          <option value="otros">Otros</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="gastoFecha">Fecha</label>
+        <input type="date" id="gastoFecha">
+      </div>
+      <div class="form-group">
+        <label for="gastoViaje">Viaje asociado (opcional)</label>
+        <select id="gastoViaje">
+          <option value="">Sin asociar</option>
+        </select>
+      </div>
+      <button type="submit" class="add-btn" id="gastoSubmitBtn">Agregar Gasto</button>
+      <button type="button" class="cancel-btn" id="gastoCancelBtn" hidden>Cancelar</button>
+    </form>
+    <div class="form-msg" id="gastoMsg"></div>
+
+    <h2>Gastos</h2>
+    <ul class="trip-list" id="gastosList"></ul>
+  </div>
+
   <div class="app" id="app" hidden>
     <div class="header">
       <h1>Viajes y Cobros</h1>
-      <button class="logout-btn" id="logoutBtn">Salir</button>
-    </div>
-
-    <div class="counter total">
-      <span class="amount" id="totalACobrar">$0</span>
-      <span class="label">A COBRAR</span>
+      <div class="header-actions">
+        <button class="logout-btn" id="backToMenuBtn">Menú</button>
+        <button class="logout-btn" id="logoutBtn">Salir</button>
+      </div>
     </div>
 
     <div class="counters">
@@ -441,8 +788,16 @@
 
     <form class="card" id="viajeForm">
       <div class="form-group">
+        <label for="empresa">Empresa</label>
+        <input type="text" id="empresa" placeholder="Ej. Transportes San Juan">
+      </div>
+      <div class="form-group">
         <label for="ruta">Ruta</label>
         <input type="text" id="ruta" placeholder="Ej. Centro - Mercado" required>
+      </div>
+      <div class="form-group">
+        <label for="fechaViaje">Fecha del viaje</label>
+        <input type="date" id="fechaViaje">
       </div>
       <div class="form-group">
         <label for="precio">Precio</label>
@@ -465,10 +820,21 @@
           <input type="text" id="abono" inputmode="decimal" placeholder="0">
         </div>
       </div>
-      <button type="submit" class="add-btn">Agregar Viaje</button>
+      <button type="submit" class="add-btn" id="viajeSubmitBtn">Agregar Viaje</button>
+      <button type="button" class="cancel-btn" id="viajeCancelBtn" hidden>Cancelar</button>
     </form>
+    <div class="form-msg" id="viajeMsg"></div>
 
     <h2>Viajes</h2>
+    <div class="filtros">
+      <button type="button" class="filtro-btn selected" data-filtro-estado="todos">Todos</button>
+      <button type="button" class="filtro-btn" data-filtro-estado="cobrado">Cobrados</button>
+      <button type="button" class="filtro-btn" data-filtro-estado="pendiente">Pendientes</button>
+    </div>
+    <div class="filtro-mes">
+      <input type="month" id="filtroMes">
+      <button type="button" class="filtro-limpiar" id="filtroMesLimpiar">Todos los meses</button>
+    </div>
     <ul class="trip-list" id="tripList"></ul>
   </div>
 
@@ -494,10 +860,18 @@
     });
 
     let viajes = [];
+    let gastos = [];
+    let gastosError = false;
     let estadoSeleccionado = 'pendiente';
     let authMode = 'login';
+    let viajeEditandoId = null;
+    let gastoEditandoId = null;
+    let filtroEstado = 'todos';
+    let filtroMes = '';
 
     const loginScreen = document.getElementById('loginScreen');
+    const menuScreen = document.getElementById('menuScreen');
+    const gastosScreen = document.getElementById('gastosScreen');
     const app = document.getElementById('app');
     const authTitle = document.getElementById('authTitle');
     const authEmail = document.getElementById('authEmail');
@@ -507,6 +881,25 @@
     const authToggle = document.getElementById('authToggle');
     const authTogglePassword = document.getElementById('authTogglePassword');
     const logoutBtn = document.getElementById('logoutBtn');
+    const menuLogoutBtn = document.getElementById('menuLogoutBtn');
+    const menuViajesBtn = document.getElementById('menuViajesBtn');
+    const menuGastosBtn = document.getElementById('menuGastosBtn');
+    const backToMenuBtn = document.getElementById('backToMenuBtn');
+    const gastosBackBtn = document.getElementById('gastosBackBtn');
+
+    const empresaInput = document.getElementById('empresa');
+    const fechaViajeInput = document.getElementById('fechaViaje');
+    const gastoForm = document.getElementById('gastoForm');
+    const gastoDescripcion = document.getElementById('gastoDescripcion');
+    const gastoMonto = document.getElementById('gastoMonto');
+    const gastoCategoria = document.getElementById('gastoCategoria');
+    const gastoFecha = document.getElementById('gastoFecha');
+    const gastoViaje = document.getElementById('gastoViaje');
+    const gastosMes = document.getElementById('gastosMes');
+    const gastosCategorias = document.getElementById('gastosCategorias');
+    const gastosList = document.getElementById('gastosList');
+    const balanceAmount = document.getElementById('balanceAmount');
+    const balanceToggle = document.getElementById('balanceToggle');
 
     const form = document.getElementById('viajeForm');
     const rutaInput = document.getElementById('ruta');
@@ -517,7 +910,15 @@
     const tripList = document.getElementById('tripList');
     const totalCobrado = document.getElementById('totalCobrado');
     const totalPendiente = document.getElementById('totalPendiente');
-    const totalACobrar = document.getElementById('totalACobrar');
+    const viajeMsg = document.getElementById('viajeMsg');
+    const gastoMsg = document.getElementById('gastoMsg');
+    const viajeSubmitBtn = document.getElementById('viajeSubmitBtn');
+    const viajeCancelBtn = document.getElementById('viajeCancelBtn');
+    const gastoSubmitBtn = document.getElementById('gastoSubmitBtn');
+    const gastoCancelBtn = document.getElementById('gastoCancelBtn');
+    const filtroBtns = document.querySelectorAll('.filtro-btn');
+    const filtroMesInput = document.getElementById('filtroMes');
+    const filtroMesLimpiar = document.getElementById('filtroMesLimpiar');
 
     function money(n) {
       const partes = Number(n).toFixed(2).split('.');
@@ -549,6 +950,105 @@
       return parseFloat(v.replace(/\./g, '').replace(',', '.'));
     }
 
+    function precioAInput(n) {
+      const s = Number(n).toFixed(2).split('.');
+      return formatPrecioInput(s[0]) + ',' + s[1];
+    }
+
+    function mostrarMsg(el, texto, ok) {
+      el.textContent = texto;
+      el.classList.toggle('ok', !!ok);
+    }
+
+    function modoAgregarViaje() {
+      viajeEditandoId = null;
+      viajeSubmitBtn.textContent = 'Agregar Viaje';
+      viajeCancelBtn.hidden = true;
+      form.reset();
+      fechaViajeInput.value = hoyISO();
+      estadoSeleccionado = 'pendiente';
+      statusButtons.forEach(function (b) {
+        b.classList.toggle('selected', b.dataset.estado === 'pendiente');
+      });
+      abonoGroup.style.display = '';
+      viajeMsg.textContent = '';
+    }
+
+    function editarViaje(v) {
+      viajeEditandoId = v.id;
+      empresaInput.value = v.empresa || '';
+      rutaInput.value = v.ruta;
+      fechaViajeInput.value = v.fecha || hoyISO();
+      precioInput.value = precioAInput(v.precio);
+      const est = v.estado === 'cobrado' ? 'cobrado' : 'pendiente';
+      estadoSeleccionado = est;
+      statusButtons.forEach(function (b) {
+        b.classList.toggle('selected', b.dataset.estado === est);
+      });
+      abonoInput.value = (Number(v.abono) || 0) > 0 ? precioAInput(v.abono) : '';
+      abonoGroup.style.display = est === 'pendiente' ? '' : 'none';
+      viajeSubmitBtn.textContent = 'Guardar cambios';
+      viajeCancelBtn.hidden = false;
+      viajeMsg.textContent = '';
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      rutaInput.focus();
+    }
+
+    function modoAgregarGasto() {
+      gastoEditandoId = null;
+      gastoSubmitBtn.textContent = 'Agregar Gasto';
+      gastoCancelBtn.hidden = true;
+      gastoForm.reset();
+      gastoFecha.value = hoyISO();
+      gastoMsg.textContent = '';
+    }
+
+    function editarGasto(g) {
+      gastoEditandoId = g.id;
+      gastoDescripcion.value = g.descripcion;
+      gastoMonto.value = precioAInput(g.monto);
+      gastoCategoria.value = g.categoria || 'otros';
+      gastoFecha.value = g.fecha || hoyISO();
+      gastoViaje.value = g.viaje_id || '';
+      gastoSubmitBtn.textContent = 'Guardar cambios';
+      gastoCancelBtn.hidden = false;
+      gastoMsg.textContent = '';
+      gastoForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      gastoDescripcion.focus();
+    }
+
+    const CATEGORIAS = {
+      combustible: 'Combustible',
+      peajes: 'Peajes',
+      comida: 'Comida',
+      alojamiento: 'Alojamiento',
+      mantenimiento: 'Mantenimiento',
+      multas: 'Multas',
+      otros: 'Otros'
+    };
+
+    const CAT_COLORS = {
+      combustible: '#f59e0b',
+      peajes: '#0369a1',
+      comida: '#15803d',
+      alojamiento: '#7c3aed',
+      mantenimiento: '#dc2626',
+      multas: '#b91c1c',
+      otros: '#64748b'
+    };
+
+    function hoyISO() {
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function formatFecha(f) {
+      if (!f) return '';
+      const p = String(f).split('-');
+      if (p.length !== 3) return f;
+      return p[2] + '/' + p[1] + '/' + p[0];
+    }
+
     function msjError(error) {
       const m = error.message || 'Ocurrió un error';
       if (m.indexOf('Invalid login credentials') !== -1) return 'Correo o contraseña incorrectos';
@@ -575,19 +1075,66 @@
       }
     }
 
-    function showLogin() {
-      loginScreen.hidden = false;
+    function ocultarPantallas() {
+      loginScreen.hidden = true;
+      menuScreen.hidden = true;
       app.hidden = true;
+      gastosScreen.hidden = true;
+    }
+
+    function showLogin() {
+      ocultarPantallas();
+      loginScreen.hidden = false;
       var guardados = cargarDatosGuardados();
       if (guardados && !authEmail.value) {
         authEmail.value = guardados.email || '';
       }
     }
 
-    function showApp() {
-      loginScreen.hidden = true;
+    function showMenu() {
+      ocultarPantallas();
+      menuScreen.hidden = false;
+      cargarViajes();
+    }
+
+    function showViajes() {
+      ocultarPantallas();
       app.hidden = false;
       cargarViajes();
+    }
+
+    function showGastos() {
+      ocultarPantallas();
+      gastosScreen.hidden = false;
+      cargarViajes();
+    }
+
+    const BALANCE_OCULTO_KEY = 'balance_oculto';
+    let balanceOculto = false;
+    try {
+      balanceOculto = localStorage.getItem(BALANCE_OCULTO_KEY) === '1';
+    } catch (e) { }
+
+    function actualizarMenuBalance() {
+      let cobrado = 0;
+      let gastosTotal = 0;
+      viajes.forEach(function (v) {
+        if (!v) return;
+        if (v.estado === 'cobrado') {
+          cobrado += Number(v.precio) || 0;
+        } else {
+          cobrado += Number(v.abono) || 0;
+        }
+      });
+      gastos.forEach(function (g) {
+        if (!g) return;
+        gastosTotal += Number(g.monto) || 0;
+      });
+      const ganado = cobrado - gastosTotal;
+      balanceAmount.textContent = balanceOculto ? '••••••' : money(ganado);
+      balanceAmount.classList.toggle('negativo', ganado < 0 && !balanceOculto);
+      balanceToggle.textContent = balanceOculto ? 'Mostrar' : 'Ocultar';
+      balanceToggle.title = balanceOculto ? 'Mostrar total' : 'Ocultar total';
     }
 
     function setAuthMode(mode) {
@@ -599,24 +1146,42 @@
     }
 
     async function cargarViajes() {
-      tripList.innerHTML = '<li class="empty">Cargando...</li>';
+      if (viajes.length === 0) {
+        tripList.innerHTML = '<li class="empty">Cargando...</li>';
+      }
       const { data, error } = await supabase
         .from('viajes')
         .select('*')
         .order('created_at', { ascending: false });
       if (error) {
-        tripList.innerHTML = '<li class="empty">No se pudieron cargar los viajes</li>';
         console.error(error);
+        if (viajes.length === 0) {
+          tripList.innerHTML = '<li class="empty">No se pudieron cargar los viajes</li>';
+        }
         return;
       }
       viajes = data;
+      await cargarGastos();
+    }
+
+    async function cargarGastos() {
+      const { data, error } = await supabase
+        .from('gastos')
+        .select('*')
+        .order('fecha', { ascending: false })
+        .order('created_at', { ascending: false });
+      gastosError = !!error;
+      gastos = error ? [] : data;
+      if (error) console.error(error);
       render();
+      renderGastos();
     }
 
     function render() {
       let cobrado = 0;
       let pendiente = 0;
       viajes.forEach(function (v) {
+        if (!v) return;
         const abono = Math.min(v.abono || 0, v.precio);
         if (v.estado === 'cobrado') {
           cobrado += v.precio;
@@ -627,20 +1192,45 @@
       });
       totalCobrado.textContent = money(cobrado);
       totalPendiente.textContent = money(pendiente);
-      totalACobrar.textContent = money(pendiente);
+      actualizarMenuBalance();
+
+      const gastosPorViaje = {};
+      gastos.forEach(function (g) {
+        if (!g) return;
+        if (!g.viaje_id) return;
+        gastosPorViaje[g.viaje_id] = (gastosPorViaje[g.viaje_id] || 0) + (Number(g.monto) || 0);
+      });
 
       tripList.innerHTML = '';
       if (viajes.length === 0) {
         tripList.innerHTML = '<li class="empty">Aún no hay viajes registrados</li>';
         return;
       }
-      viajes.forEach(function (v) {
+      const lista = viajes.filter(function (v) {
+        if (filtroEstado !== 'todos' && v.estado !== filtroEstado) return false;
+        if (filtroMes && String(v.fecha || '').slice(0, 7) !== filtroMes) return false;
+        return true;
+      });
+      if (lista.length === 0) {
+        tripList.innerHTML = '<li class="empty">No hay viajes para este filtro</li>';
+        return;
+      }
+      lista.forEach(function (v) {
+        if (!v) return;
         const li = document.createElement('li');
         li.className = 'trip-item';
         const abono = Math.min(v.abono || 0, v.precio);
 
         const info = document.createElement('div');
         info.className = 'trip-info';
+
+        if (v.empresa) {
+          const empresa = document.createElement('div');
+          empresa.className = 'trip-empresa';
+          empresa.textContent = v.empresa;
+          info.appendChild(empresa);
+        }
+
         const route = document.createElement('div');
         route.className = 'trip-route';
         route.textContent = v.ruta;
@@ -650,11 +1240,28 @@
         info.appendChild(route);
         info.appendChild(price);
 
+        if (v.fecha) {
+          const fecha = document.createElement('div');
+          fecha.className = 'trip-date';
+          fecha.textContent = formatFecha(v.fecha);
+          info.appendChild(fecha);
+        }
+
         if (v.estado === 'pendiente' && abono > 0) {
           const abonoLine = document.createElement('div');
           abonoLine.className = 'abono-line';
           abonoLine.textContent = 'Pagado ' + money(abono) + ' · Falta ' + money(v.precio - abono);
           info.appendChild(abonoLine);
+        }
+
+        const gastosViaje = gastosPorViaje[v.id] || 0;
+        if (gastosViaje > 0) {
+          const cobradoViaje = v.estado === 'cobrado' ? (Number(v.precio) || 0) : (Number(v.abono) || 0);
+          const ganancia = cobradoViaje - gastosViaje;
+          const gastosLine = document.createElement('div');
+          gastosLine.className = 'trip-gastos ' + (ganancia >= 0 ? 'positivo' : 'negativo');
+          gastosLine.textContent = 'Gastos: ' + money(gastosViaje) + ' · Ganancia: ' + money(ganancia);
+          info.appendChild(gastosLine);
         }
 
         const badge = document.createElement('span');
@@ -667,6 +1274,15 @@
         del.addEventListener('click', function (e) {
           e.stopPropagation();
           eliminarViaje(v.id);
+        });
+
+        const edit = document.createElement('button');
+        edit.className = 'edit-btn';
+        edit.textContent = '✎';
+        edit.title = 'Editar viaje';
+        edit.addEventListener('click', function (e) {
+          e.stopPropagation();
+          editarViaje(v);
         });
 
         li.appendChild(info);
@@ -712,6 +1328,7 @@
           li.appendChild(pay);
         }
 
+        li.appendChild(edit);
         li.appendChild(del);
         li.addEventListener('click', function () {
           const nuevo = v.estado === 'cobrado' ? 'pendiente' : 'cobrado';
@@ -722,15 +1339,161 @@
     }
 
     async function actualizarViaje(id, cambios) {
+      const anterior = viajes.find(function (v) { return v.id === id; });
+      viajes = viajes.map(function (v) {
+        return v.id === id ? Object.assign({}, v, cambios) : v;
+      });
+      render();
       const { error } = await supabase.from('viajes').update(cambios).eq('id', id);
-      if (error) console.error(error);
-      cargarViajes();
+      if (error) {
+        console.error(error);
+        if (anterior) {
+          viajes = viajes.map(function (v) {
+            return v.id === id ? anterior : v;
+          });
+          render();
+        }
+      }
     }
 
     async function eliminarViaje(id) {
+      const anterior = viajes;
+      viajes = viajes.filter(function (v) { return v.id !== id; });
+      render();
       const { error } = await supabase.from('viajes').delete().eq('id', id);
-      if (error) console.error(error);
-      cargarViajes();
+      if (error) {
+        console.error(error);
+        viajes = anterior;
+        render();
+      }
+    }
+
+    function renderGastos() {
+      const mes = hoyISO().slice(0, 7);
+      const porCat = {};
+      Object.keys(CATEGORIAS).forEach(function (k) { porCat[k] = 0; });
+      let totalMes = 0;
+
+      gastos.forEach(function (g) {
+        if (!g) return;
+        const m = Number(g.monto) || 0;
+        if (String(g.fecha).slice(0, 7) === mes) {
+          totalMes += m;
+          porCat[g.categoria] = (porCat[g.categoria] || 0) + m;
+        }
+      });
+      gastosMes.textContent = money(totalMes);
+
+      gastosCategorias.innerHTML = '';
+      Object.keys(CATEGORIAS).forEach(function (k) {
+        const row = document.createElement('div');
+        row.className = 'cat-row';
+        const name = document.createElement('span');
+        name.className = 'cat-name';
+        const dot = document.createElement('span');
+        dot.className = 'cat-dot';
+        dot.style.background = CAT_COLORS[k];
+        name.appendChild(dot);
+        name.appendChild(document.createTextNode(CATEGORIAS[k]));
+        const amount = document.createElement('span');
+        amount.className = 'cat-amount';
+        amount.textContent = money(porCat[k]);
+        row.appendChild(name);
+        row.appendChild(amount);
+        gastosCategorias.appendChild(row);
+      });
+
+      gastoViaje.innerHTML = '';
+      const sinAsociar = document.createElement('option');
+      sinAsociar.value = '';
+      sinAsociar.textContent = 'Sin asociar';
+      gastoViaje.appendChild(sinAsociar);
+      viajes.forEach(function (v) {
+        if (!v) return;
+        const op = document.createElement('option');
+        op.value = v.id;
+        let texto = v.ruta;
+        if (v.empresa) texto += ' · ' + v.empresa;
+        op.textContent = texto;
+        gastoViaje.appendChild(op);
+      });
+
+      gastosList.innerHTML = '';
+      if (gastosError) {
+        gastosList.innerHTML = '<li class="empty">No se pudieron cargar los gastos. ¿Pegaste el SQL de la tabla "gastos" en Supabase?</li>';
+        return;
+      }
+      if (gastos.length === 0) {
+        gastosList.innerHTML = '<li class="empty">Aún no hay gastos registrados</li>';
+        return;
+      }
+      gastos.forEach(function (g) {
+        if (!g) return;
+        const li = document.createElement('li');
+        li.className = 'trip-item';
+
+        const info = document.createElement('div');
+        info.className = 'trip-info';
+        const desc = document.createElement('div');
+        desc.className = 'trip-route';
+        desc.textContent = g.descripcion;
+        const monto = document.createElement('div');
+        monto.className = 'trip-price';
+        monto.textContent = money(g.monto);
+        info.appendChild(desc);
+        info.appendChild(monto);
+
+        const viaje = viajes.find(function (v) { return v.id === g.viaje_id; });
+        const meta = document.createElement('div');
+        meta.className = 'trip-date';
+        let texto = formatFecha(g.fecha);
+        if (viaje) texto += ' · ' + viaje.ruta;
+        meta.textContent = texto;
+        info.appendChild(meta);
+
+        const badge = document.createElement('span');
+        badge.className = 'trip-badge';
+        badge.textContent = CATEGORIAS[g.categoria] || CATEGORIAS.otros;
+        badge.style.background = CAT_COLORS[g.categoria] + '26';
+        badge.style.color = CAT_COLORS[g.categoria];
+
+        const del = document.createElement('button');
+        del.className = 'delete-btn';
+        del.textContent = '✕';
+        del.addEventListener('click', function (e) {
+          e.stopPropagation();
+          eliminarGasto(g.id);
+        });
+
+        const edit = document.createElement('button');
+        edit.className = 'edit-btn';
+        edit.textContent = '✎';
+        edit.title = 'Editar gasto';
+        edit.addEventListener('click', function (e) {
+          e.stopPropagation();
+          editarGasto(g);
+        });
+
+        li.appendChild(info);
+        li.appendChild(badge);
+        li.appendChild(edit);
+        li.appendChild(del);
+        gastosList.appendChild(li);
+      });
+    }
+
+    async function eliminarGasto(id) {
+      const anterior = gastos;
+      gastos = gastos.filter(function (g) { return g.id !== id; });
+      render();
+      renderGastos();
+      const { error } = await supabase.from('gastos').delete().eq('id', id);
+      if (error) {
+        console.error(error);
+        gastos = anterior;
+        render();
+        renderGastos();
+      }
     }
 
     statusButtons.forEach(function (btn) {
@@ -758,25 +1521,121 @@
       }
     });
 
+    gastoMonto.addEventListener('input', function () {
+      const formatted = formatPrecioInput(this.value);
+      if (this.value !== formatted) {
+        this.value = formatted;
+        this.setSelectionRange(this.value.length, this.value.length);
+      }
+    });
+
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      viajeMsg.textContent = '';
       const ruta = rutaInput.value.trim();
       const precio = parsePrecio(precioInput.value);
-      if (!ruta || isNaN(precio) || precio < 0) return;
+      if (!ruta || isNaN(precio) || precio < 0) {
+        mostrarMsg(viajeMsg, 'Escribe una ruta y un precio válidos.', false);
+        return;
+      }
       const abonoParcial = estadoSeleccionado === 'pendiente' ? parsePrecio(abonoInput.value) : 0;
       const abono = (!isNaN(abonoParcial) && abonoParcial > 0) ? Math.min(abonoParcial, precio) : 0;
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      const { error } = await supabase.from('viajes').insert({
-        user_id: user.id,
+      const datos = {
+        empresa: empresaInput.value.trim() || null,
         ruta: ruta,
+        fecha: fechaViajeInput.value || hoyISO(),
         precio: precio,
         estado: estadoSeleccionado,
         abono: abono
-      });
-      if (error) console.error(error);
-      form.reset();
-      cargarViajes();
+      };
+      if (viajeEditandoId) {
+        const { data: actualizado, error } = await supabase
+          .from('viajes')
+          .update(datos)
+          .eq('id', viajeEditandoId)
+          .select()
+          .single();
+        if (error) {
+          console.error(error);
+          mostrarMsg(viajeMsg, 'No se pudo guardar el viaje: ' + msjError(error), false);
+          return;
+        }
+        viajes = viajes.map(function (v) { return v.id === actualizado.id ? actualizado : v; });
+        render();
+        modoAgregarViaje();
+        mostrarMsg(viajeMsg, 'Viaje actualizado.', true);
+        return;
+      }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data: nuevo, error } = await supabase
+        .from('viajes')
+        .insert(Object.assign({ user_id: user.id }, datos))
+        .select()
+        .single();
+      if (error) {
+        console.error(error);
+        mostrarMsg(viajeMsg, 'No se pudo guardar el viaje: ' + msjError(error), false);
+        return;
+      }
+      viajes.unshift(nuevo);
+      render();
+      modoAgregarViaje();
+      mostrarMsg(viajeMsg, 'Viaje guardado.', true);
+    });
+
+    gastoForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      gastoMsg.textContent = '';
+      const descripcion = gastoDescripcion.value.trim();
+      const monto = parsePrecio(gastoMonto.value);
+      if (!descripcion || isNaN(monto) || monto < 0) {
+        mostrarMsg(gastoMsg, 'Escribe una descripción y un monto válidos.', false);
+        return;
+      }
+      const datos = {
+        descripcion: descripcion,
+        monto: monto,
+        categoria: gastoCategoria.value,
+        fecha: gastoFecha.value || hoyISO(),
+        viaje_id: gastoViaje.value || null
+      };
+      if (gastoEditandoId) {
+        const { data: actualizado, error } = await supabase
+          .from('gastos')
+          .update(datos)
+          .eq('id', gastoEditandoId)
+          .select()
+          .single();
+        if (error) {
+          console.error(error);
+          mostrarMsg(gastoMsg, 'No se pudo guardar el gasto: ' + msjError(error), false);
+          return;
+        }
+        gastos = gastos.map(function (g) { return g.id === actualizado.id ? actualizado : g; });
+        renderGastos();
+        render();
+        modoAgregarGasto();
+        mostrarMsg(gastoMsg, 'Gasto actualizado.', true);
+        return;
+      }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data: nuevo, error } = await supabase
+        .from('gastos')
+        .insert(Object.assign({ user_id: user.id }, datos))
+        .select()
+        .single();
+      if (error) {
+        console.error(error);
+        mostrarMsg(gastoMsg, 'No se pudo guardar el gasto: ' + msjError(error), false);
+        return;
+      }
+      gastos.unshift(nuevo);
+      renderGastos();
+      render();
+      modoAgregarGasto();
+      mostrarMsg(gastoMsg, 'Gasto guardado.', true);
     });
 
     authToggle.addEventListener('click', function () {
@@ -792,6 +1651,14 @@
       authPassword.type = esPassword ? 'text' : 'password';
       authTogglePassword.setAttribute('aria-label', esPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
       authTogglePassword.innerHTML = esPassword ? ojoCerrado : ojoAbierto;
+    });
+
+    balanceToggle.addEventListener('click', function () {
+      balanceOculto = !balanceOculto;
+      try {
+        localStorage.setItem(BALANCE_OCULTO_KEY, balanceOculto ? '1' : '0');
+      } catch (e) { }
+      actualizarMenuBalance();
     });
 
     authSubmit.addEventListener('click', async function () {
@@ -831,13 +1698,51 @@
       }
     });
 
+    menuViajesBtn.addEventListener('click', showViajes);
+    menuGastosBtn.addEventListener('click', showGastos);
+    backToMenuBtn.addEventListener('click', showMenu);
+    gastosBackBtn.addEventListener('click', showMenu);
+
+    viajeCancelBtn.addEventListener('click', function () {
+      modoAgregarViaje();
+    });
+
+    gastoCancelBtn.addEventListener('click', function () {
+      modoAgregarGasto();
+    });
+
+    filtroBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        filtroEstado = b.dataset.filtroEstado;
+        filtroBtns.forEach(function (x) {
+          x.classList.toggle('selected', x === b);
+        });
+        render();
+      });
+    });
+
+    filtroMesInput.addEventListener('change', function () {
+      filtroMes = this.value;
+      render();
+    });
+
+    filtroMesLimpiar.addEventListener('click', function () {
+      filtroMes = '';
+      filtroMesInput.value = '';
+      render();
+    });
+
     logoutBtn.addEventListener('click', async function () {
+      await supabase.auth.signOut();
+    });
+
+    menuLogoutBtn.addEventListener('click', async function () {
       await supabase.auth.signOut();
     });
 
     supabase.auth.onAuthStateChange(function (event, session) {
       if (session) {
-        showApp();
+        showMenu();
       } else {
         showLogin();
       }
@@ -845,11 +1750,14 @@
 
     supabase.auth.getSession().then(function ({ data }) {
       if (data.session) {
-        showApp();
+        showMenu();
       } else {
         showLogin();
       }
     });
+
+    fechaViajeInput.value = hoyISO();
+    gastoFecha.value = hoyISO();
     }
 
     if (typeof window.supabase !== 'undefined') {
