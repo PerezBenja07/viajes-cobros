@@ -659,11 +659,101 @@
       font-weight: bold;
       color: #334155;
     }
+
+    .buscador {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      margin-bottom: 12px;
+    }
+
+    .auth-link {
+      display: block;
+      width: 100%;
+      border: none;
+      background: none;
+      color: #0f766e;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .auth-link:hover { text-decoration: underline; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-overlay[hidden] { display: none; }
+
+    .modal-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      width: 100%;
+      max-width: 340px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .modal-text {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-btn.cancel {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    .modal-btn.cancel:hover { background: #e2e8f0; }
+
+    .modal-btn.danger {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .modal-btn.danger:hover { background: #b91c1c; }
   </style>
 </head>
 <body>
   <div id="loginScreen" class="login-screen" hidden>
-    <div class="auth-card">
+    <div class="auth-card" id="authCard">
       <h1>Viajes y Cobros</h1>
       <div class="auth-title" id="authTitle">Iniciar sesión</div>
       <input type="email" id="authEmail" name="email" placeholder="Correo electrónico" autocomplete="email">
@@ -673,9 +763,22 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </button>
       </div>
+      <button type="button" class="auth-link" id="authForgot">¿Olvidaste tu contraseña?</button>
       <div class="auth-message" id="authMessage"></div>
       <button type="button" class="auth-btn primary" id="authSubmit">Iniciar sesión</button>
       <button type="button" class="auth-btn secondary" id="authToggle">¿No tienes cuenta? Crear cuenta</button>
+    </div>
+    <div class="auth-card" id="resetCard" hidden>
+      <div class="auth-title">Nueva contraseña</div>
+      <div class="password-wrapper">
+        <input type="password" id="resetPassword" placeholder="Nueva contraseña" autocomplete="new-password">
+        <button type="button" class="password-toggle" id="resetTogglePassword" aria-label="Mostrar contraseña">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="auth-message" id="resetMessage"></div>
+      <button type="button" class="auth-btn primary" id="resetSubmit">Guardar contraseña</button>
+      <button type="button" class="auth-btn secondary" id="resetBack">Volver a iniciar sesión</button>
     </div>
   </div>
 
@@ -763,6 +866,16 @@
     <div class="form-msg" id="gastoMsg"></div>
 
     <h2>Gastos</h2>
+    <select id="gastoFiltroCategoria" class="buscador">
+      <option value="">Todas las categorías</option>
+      <option value="combustible">Combustible</option>
+      <option value="peajes">Peajes</option>
+      <option value="comida">Comida</option>
+      <option value="alojamiento">Alojamiento</option>
+      <option value="mantenimiento">Mantenimiento</option>
+      <option value="multas">Multas</option>
+      <option value="otros">Otros</option>
+    </select>
     <ul class="trip-list" id="gastosList"></ul>
   </div>
 
@@ -826,6 +939,7 @@
     <div class="form-msg" id="viajeMsg"></div>
 
     <h2>Viajes</h2>
+    <input type="text" id="buscador" class="buscador" placeholder="Buscar por ruta o empresa...">
     <div class="filtros">
       <button type="button" class="filtro-btn selected" data-filtro-estado="todos">Todos</button>
       <button type="button" class="filtro-btn" data-filtro-estado="cobrado">Cobrados</button>
@@ -836,6 +950,17 @@
       <button type="button" class="filtro-limpiar" id="filtroMesLimpiar">Todos los meses</button>
     </div>
     <ul class="trip-list" id="tripList"></ul>
+  </div>
+
+  <div class="modal-overlay" id="confirmModal" hidden>
+    <div class="modal-card">
+      <div class="modal-title" id="confirmTitle">Borrar</div>
+      <div class="modal-text" id="confirmText">¿Seguro que querés borrar este elemento?</div>
+      <div class="modal-buttons">
+        <button type="button" class="modal-btn cancel" id="confirmCancel">Cancelar</button>
+        <button type="button" class="modal-btn danger" id="confirmOk">Borrar</button>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -868,6 +993,9 @@
     let gastoEditandoId = null;
     let filtroEstado = 'todos';
     let filtroMes = '';
+    let busqueda = '';
+    let filtroGastoCategoria = '';
+    let confirmarAccion = null;
 
     const loginScreen = document.getElementById('loginScreen');
     const menuScreen = document.getElementById('menuScreen');
@@ -886,6 +1014,20 @@
     const menuGastosBtn = document.getElementById('menuGastosBtn');
     const backToMenuBtn = document.getElementById('backToMenuBtn');
     const gastosBackBtn = document.getElementById('gastosBackBtn');
+    const buscadorInput = document.getElementById('buscador');
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmTitle = document.getElementById('confirmTitle');
+    const confirmText = document.getElementById('confirmText');
+    const confirmOk = document.getElementById('confirmOk');
+    const confirmCancel = document.getElementById('confirmCancel');
+    const authCard = document.getElementById('authCard');
+    const authForgot = document.getElementById('authForgot');
+    const resetCard = document.getElementById('resetCard');
+    const resetPassword = document.getElementById('resetPassword');
+    const resetTogglePassword = document.getElementById('resetTogglePassword');
+    const resetMessage = document.getElementById('resetMessage');
+    const resetSubmit = document.getElementById('resetSubmit');
+    const resetBack = document.getElementById('resetBack');
 
     const empresaInput = document.getElementById('empresa');
     const fechaViajeInput = document.getElementById('fechaViaje');
@@ -898,6 +1040,7 @@
     const gastosMes = document.getElementById('gastosMes');
     const gastosCategorias = document.getElementById('gastosCategorias');
     const gastosList = document.getElementById('gastosList');
+    const gastoFiltroCategoria = document.getElementById('gastoFiltroCategoria');
     const balanceAmount = document.getElementById('balanceAmount');
     const balanceToggle = document.getElementById('balanceToggle');
 
@@ -1085,10 +1228,23 @@
     function showLogin() {
       ocultarPantallas();
       loginScreen.hidden = false;
+      authCard.hidden = false;
+      resetCard.hidden = true;
+      if (authMode === 'forgot') setAuthMode('login');
       var guardados = cargarDatosGuardados();
       if (guardados && !authEmail.value) {
         authEmail.value = guardados.email || '';
       }
+    }
+
+    function mostrarRestablecerPassword() {
+      ocultarPantallas();
+      loginScreen.hidden = false;
+      authCard.hidden = true;
+      resetCard.hidden = false;
+      resetPassword.value = '';
+      resetMessage.textContent = '';
+      resetPassword.focus();
     }
 
     function showMenu() {
@@ -1139,10 +1295,20 @@
 
     function setAuthMode(mode) {
       authMode = mode;
+      if (mode === 'forgot') {
+        authTitle.textContent = 'Recuperar contraseña';
+        authSubmit.textContent = 'Enviar enlace';
+        authToggle.textContent = 'Volver a iniciar sesión';
+        authForgot.hidden = true;
+        authPassword.parentElement.hidden = true;
+        return;
+      }
       authTitle.textContent = mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta';
       authSubmit.textContent = mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta';
       authToggle.textContent = mode === 'login' ? '¿No tienes cuenta? Crear cuenta' : '¿Ya tienes cuenta? Iniciar sesión';
       authPassword.setAttribute('autocomplete', mode === 'login' ? 'current-password' : 'new-password');
+      authPassword.parentElement.hidden = false;
+      authForgot.hidden = mode !== 'login';
     }
 
     async function cargarViajes() {
@@ -1209,6 +1375,12 @@
       const lista = viajes.filter(function (v) {
         if (filtroEstado !== 'todos' && v.estado !== filtroEstado) return false;
         if (filtroMes && String(v.fecha || '').slice(0, 7) !== filtroMes) return false;
+        if (busqueda) {
+          const b = busqueda.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          const ruta = String(v.ruta || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          const empresa = String(v.empresa || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          if (ruta.indexOf(b) === -1 && empresa.indexOf(b) === -1) return false;
+        }
         return true;
       });
       if (lista.length === 0) {
@@ -1273,7 +1445,9 @@
         del.textContent = '✕';
         del.addEventListener('click', function (e) {
           e.stopPropagation();
-          eliminarViaje(v.id);
+          confirmarBorrado('Borrar viaje', '¿Seguro que querés borrar el viaje "' + v.ruta + '" de ' + money(v.precio) + '?', function () {
+            eliminarViaje(v.id);
+          });
         });
 
         const edit = document.createElement('button');
@@ -1356,6 +1530,13 @@
       }
     }
 
+    function confirmarBorrado(title, text, accion) {
+      confirmTitle.textContent = title;
+      confirmText.textContent = text;
+      confirmarAccion = accion;
+      confirmModal.hidden = false;
+    }
+
     async function eliminarViaje(id) {
       const anterior = viajes;
       viajes = viajes.filter(function (v) { return v.id !== id; });
@@ -1427,7 +1608,16 @@
         gastosList.innerHTML = '<li class="empty">Aún no hay gastos registrados</li>';
         return;
       }
-      gastos.forEach(function (g) {
+      const listaGastos = gastos.filter(function (g) {
+        if (!g) return false;
+        if (filtroGastoCategoria && g.categoria !== filtroGastoCategoria) return false;
+        return true;
+      });
+      if (listaGastos.length === 0) {
+        gastosList.innerHTML = '<li class="empty">No hay gastos para esta categoría</li>';
+        return;
+      }
+      listaGastos.forEach(function (g) {
         if (!g) return;
         const li = document.createElement('li');
         li.className = 'trip-item';
@@ -1462,7 +1652,9 @@
         del.textContent = '✕';
         del.addEventListener('click', function (e) {
           e.stopPropagation();
-          eliminarGasto(g.id);
+          confirmarBorrado('Borrar gasto', '¿Seguro que querés borrar el gasto "' + g.descripcion + '" de ' + money(g.monto) + '?', function () {
+            eliminarGasto(g.id);
+          });
         });
 
         const edit = document.createElement('button');
@@ -1639,8 +1831,18 @@
     });
 
     authToggle.addEventListener('click', function () {
-      setAuthMode(authMode === 'login' ? 'register' : 'login');
+      if (authMode === 'forgot') {
+        setAuthMode('login');
+      } else {
+        setAuthMode(authMode === 'login' ? 'register' : 'login');
+      }
       authMessage.textContent = '';
+    });
+
+    authForgot.addEventListener('click', function () {
+      setAuthMode('forgot');
+      authMessage.textContent = '';
+      authEmail.focus();
     });
 
     const ojoAbierto = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
@@ -1651,6 +1853,62 @@
       authPassword.type = esPassword ? 'text' : 'password';
       authTogglePassword.setAttribute('aria-label', esPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
       authTogglePassword.innerHTML = esPassword ? ojoCerrado : ojoAbierto;
+    });
+
+    resetTogglePassword.addEventListener('click', function () {
+      const esPassword = resetPassword.type === 'password';
+      resetPassword.type = esPassword ? 'text' : 'password';
+      resetTogglePassword.setAttribute('aria-label', esPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+      resetTogglePassword.innerHTML = esPassword ? ojoCerrado : ojoAbierto;
+    });
+
+    resetBack.addEventListener('click', function () {
+      resetPassword.value = '';
+      resetMessage.textContent = '';
+      setAuthMode('login');
+      showLogin();
+    });
+
+    resetSubmit.addEventListener('click', async function () {
+      const password = resetPassword.value;
+      resetMessage.textContent = '';
+      if (!password) {
+        resetMessage.textContent = 'Escribí tu nueva contraseña';
+        return;
+      }
+      resetSubmit.disabled = true;
+      try {
+        const { error } = await supabase.auth.updateUser({ password: password });
+        if (error) {
+          resetMessage.textContent = msjError(error);
+          return;
+        }
+        await supabase.auth.signOut({ scope: 'others' });
+        resetPassword.value = '';
+        setAuthMode('login');
+        authMessage.textContent = 'Contraseña actualizada. Ahora iniciá sesión con tu nueva contraseña.';
+      } catch (e) {
+        resetMessage.textContent = 'Error: ' + (e.message || e);
+      } finally {
+        resetSubmit.disabled = false;
+      }
+    });
+
+    buscadorInput.addEventListener('input', function () {
+      busqueda = this.value.trim();
+      render();
+    });
+
+    confirmCancel.addEventListener('click', function () {
+      confirmModal.hidden = true;
+      confirmarAccion = null;
+    });
+
+    confirmOk.addEventListener('click', function () {
+      const accion = confirmarAccion;
+      confirmarAccion = null;
+      confirmModal.hidden = true;
+      if (accion) accion();
     });
 
     balanceToggle.addEventListener('click', function () {
@@ -1671,6 +1929,15 @@
       }
       authSubmit.disabled = true;
       try {
+        if (authMode === 'forgot') {
+          const { error: resetError } = await supabase.auth.resetPasswordForEmail(email);
+          if (resetError) {
+            authMessage.textContent = msjError(resetError);
+            return;
+          }
+          authMessage.textContent = 'Te enviamos un enlace a tu correo. Revisá tu bandeja de entrada.';
+          return;
+        }
         if (authMode === 'login') {
           const { error } = await supabase.auth.signInWithPassword({ email, password });
           if (error) {
@@ -1732,6 +1999,11 @@
       render();
     });
 
+    gastoFiltroCategoria.addEventListener('change', function () {
+      filtroGastoCategoria = this.value;
+      renderGastos();
+    });
+
     logoutBtn.addEventListener('click', async function () {
       await supabase.auth.signOut();
     });
@@ -1741,7 +2013,9 @@
     });
 
     supabase.auth.onAuthStateChange(function (event, session) {
-      if (session) {
+      if (event === 'PASSWORD_RECOVERY') {
+        mostrarRestablecerPassword();
+      } else if (session) {
         showMenu();
       } else {
         showLogin();
