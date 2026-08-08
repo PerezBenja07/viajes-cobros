@@ -486,6 +486,8 @@
       text-align: center;
     }
 
+    .auth-message.ok { color: #15803d; }
+
     .header-actions {
       display: flex;
       gap: 8px;
@@ -1873,22 +1875,22 @@
       const password = resetPassword.value;
       resetMessage.textContent = '';
       if (!password) {
-        resetMessage.textContent = 'Escribí tu nueva contraseña';
+        mostrarMsg(resetMessage, 'Escribí tu nueva contraseña', false);
         return;
       }
       resetSubmit.disabled = true;
       try {
         const { error } = await supabase.auth.updateUser({ password: password });
         if (error) {
-          resetMessage.textContent = msjError(error);
+          mostrarMsg(resetMessage, msjError(error), false);
           return;
         }
         await supabase.auth.signOut({ scope: 'others' });
         resetPassword.value = '';
         setAuthMode('login');
-        authMessage.textContent = 'Contraseña actualizada. Ahora iniciá sesión con tu nueva contraseña.';
+        mostrarMsg(authMessage, 'Contraseña actualizada. Ahora iniciá sesión con tu nueva contraseña.', true);
       } catch (e) {
-        resetMessage.textContent = 'Error: ' + (e.message || e);
+        mostrarMsg(resetMessage, 'Error: ' + (e.message || e), false);
       } finally {
         resetSubmit.disabled = false;
       }
@@ -1923,43 +1925,47 @@
       const email = authEmail.value.trim();
       const password = authPassword.value;
       authMessage.textContent = '';
-      if (!email || !password) {
-        authMessage.textContent = 'Escribe tu correo y tu contraseña';
-        return;
-      }
       authSubmit.disabled = true;
       try {
         if (authMode === 'forgot') {
-          const { error: resetError } = await supabase.auth.resetPasswordForEmail(email);
-          if (resetError) {
-            authMessage.textContent = msjError(resetError);
+          if (!email) {
+            mostrarMsg(authMessage, 'Escribe tu correo', false);
             return;
           }
-          authMessage.textContent = 'Te enviamos un enlace a tu correo. Revisá tu bandeja de entrada.';
+          const { error: resetError } = await supabase.auth.resetPasswordForEmail(email);
+          if (resetError) {
+            mostrarMsg(authMessage, msjError(resetError), false);
+            return;
+          }
+          mostrarMsg(authMessage, 'Te enviamos un enlace a tu correo. Revisá tu bandeja de entrada.', true);
+          return;
+        }
+        if (!email || !password) {
+          mostrarMsg(authMessage, 'Escribe tu correo y tu contraseña', false);
           return;
         }
         if (authMode === 'login') {
           const { error } = await supabase.auth.signInWithPassword({ email, password });
           if (error) {
-            authMessage.textContent = msjError(error);
+            mostrarMsg(authMessage, msjError(error), false);
             return;
           }
           recordarDatos(email);
         } else {
           const { data, error } = await supabase.auth.signUp({ email, password });
           if (error) {
-            authMessage.textContent = msjError(error);
+            mostrarMsg(authMessage, msjError(error), false);
             return;
           }
           recordarDatos(email);
           if (!data.session) {
-            authMessage.textContent = 'Cuenta creada. Ahora inicia sesión.';
+            mostrarMsg(authMessage, 'Cuenta creada. Ahora inicia sesión.', true);
             setAuthMode('login');
             return;
           }
         }
       } catch (e) {
-        authMessage.textContent = 'Error: ' + (e.message || e);
+        mostrarMsg(authMessage, 'Error: ' + (e.message || e), false);
       } finally {
         authSubmit.disabled = false;
       }
