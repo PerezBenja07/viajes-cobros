@@ -3,17 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f766e'/%3E%3Ctext x='50' y='70' font-size='58' font-family='Arial, sans-serif' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EV%3C/text%3E%3C/svg%3E">
   <title>Viajes y Cobros</title>
   <style>
+    :root {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --primary: #0f766e;
+      --primary-hover: #115e59;
+      --primary-soft: #f0fdfa;
+      --success: #15803d;
+      --success-soft: #f0fdf4;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --amber: #b45309;
+      --radius: 10px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.12);
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #0f766e, #134e4a);
+      font-family: var(--font);
+      background: linear-gradient(180deg, #0f766e 0%, #134e4a 28%, #7aa39b 55%, #f1f5f9 85%);
+      background-attachment: fixed;
+      color: var(--text);
       min-height: 100vh;
-      padding: 16px;
+      padding: 24px 16px;
       display: flex;
       justify-content: center;
+      -webkit-font-smoothing: antialiased;
     }
 
     .app {
@@ -25,92 +54,129 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
-    .header h1 {
-      margin-bottom: 0;
-    }
+    .header h1 { margin-bottom: 0; }
 
     h1 {
       text-align: center;
       color: #fff;
-      font-size: 24px;
-      letter-spacing: 1px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-shadow: 0 1px 2px rgba(15, 23, 42, 0.2);
+    }
+
+    h2 {
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.2px;
     }
 
     .logout-btn {
-      border: none;
-      background: #334155;
-      color: #fff;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
       font-size: 13px;
-      font-weight: bold;
+      font-weight: 600;
+      font-family: inherit;
       padding: 7px 14px;
-      border-radius: 20px;
+      border-radius: 999px;
       cursor: pointer;
       white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
     }
 
-    .logout-btn:hover { background: #475569; }
+    .logout-btn:hover {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: #99f6e4;
+    }
 
     .counters {
       display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .counter {
       flex: 1;
-      background: #fff;
-      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       padding: 14px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-sm);
     }
 
     .counter .amount {
       display: block;
-      font-size: 26px;
-      font-weight: bold;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
     }
 
     .counter .label {
-      font-size: 13px;
-      letter-spacing: 1px;
-      opacity: 0.75;
+      font-size: 12px;
+      letter-spacing: 0.6px;
+      color: var(--text-secondary);
     }
 
-    .counter.collected .amount { color: #15803d; }
-    .counter.pending .amount { color: #dc2626; }
+    .counter.collected .amount { color: var(--success); }
+    .counter.pending .amount { color: var(--danger); }
 
     .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-      margin-bottom: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .form-group label {
       display: block;
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
     }
 
     .form-group input,
-    .form-group select {
+    .form-group select,
+    .buscador,
+    .filtro-mes input[type="month"],
+    .auth-card input {
       width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background: #f8fafc;
+      padding: 10px 12px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .buscador:focus,
+    .filtro-mes input[type="month"]:focus,
+    .auth-card input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    .form-group input::placeholder,
+    .buscador::placeholder { color: var(--text-muted); }
 
     .precio-wrapper {
       position: relative;
@@ -118,16 +184,16 @@
 
     .precio-wrapper .precio-prefix {
       position: absolute;
-      left: 10px;
+      left: 12px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 16px;
-      font-weight: bold;
-      color: #475569;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-secondary);
     }
 
     .precio-wrapper input {
-      padding-left: 24px;
+      padding-left: 26px;
     }
 
     .status-buttons {
@@ -138,54 +204,57 @@
     .status-btn {
       flex: 1;
       padding: 10px;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
       font-size: 14px;
-      font-weight: bold;
-      background: #f8fafc;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text-secondary);
       cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .status-btn:hover {
+      border-color: var(--border-strong);
+      color: var(--text);
     }
 
     .status-btn.cobrado.selected {
-      background: #dcfce7;
-      border-color: #15803d;
-      color: #15803d;
+      background: var(--success-soft);
+      border-color: var(--success);
+      color: var(--success);
     }
 
     .status-btn.pendiente.selected {
-      background: #fee2e2;
-      border-color: #dc2626;
-      color: #dc2626;
+      background: var(--danger-soft);
+      border-color: var(--danger);
+      color: var(--danger);
     }
 
     .add-btn {
       width: 100%;
-      padding: 13px;
+      padding: 12px;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #0f766e;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--primary);
       color: #fff;
       cursor: pointer;
+      transition: background 0.15s ease;
     }
 
-    .add-btn:hover { background: #0d5e58; }
+    .add-btn:hover { background: var(--primary-hover); }
 
     .form-msg {
       min-height: 20px;
       font-size: 14px;
-      color: #dc2626;
-      margin-bottom: 10px;
+      color: var(--danger);
+      margin-bottom: 12px;
       text-align: center;
-      font-weight: bold;
-    }
-
-    h2 {
-      color: #fff;
-      font-size: 18px;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
+      font-weight: 600;
     }
 
     .trip-list {
@@ -193,105 +262,131 @@
     }
 
     .trip-item {
-      background: #fff;
-      border-radius: 10px;
-      padding: 12px;
+      background: var(--surface);
+      border: 2px solid #000;
+      border-radius: var(--radius);
+      padding: 14px;
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .trip-item:hover {
+      border-color: #000;
+      box-shadow: var(--shadow);
     }
 
     .trip-info {
       flex: 1;
       margin-right: 10px;
+      min-width: 0;
     }
 
     .trip-route {
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .trip-price {
-      font-size: 14px;
-      color: #475569;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 2px;
     }
 
     .trip-badge {
-      font-size: 13px;
-      font-weight: bold;
+      font-size: 12px;
+      font-weight: 600;
       padding: 4px 10px;
-      border-radius: 20px;
+      border-radius: 999px;
       white-space: nowrap;
+      flex: none;
     }
 
-    .trip-badge.cobrado { background: #dcfce7; color: #15803d; }
-    .trip-badge.pendiente { background: #fee2e2; color: #dc2626; }
+    .trip-badge.cobrado { background: var(--success-soft); color: var(--success); }
+    .trip-badge.pendiente { background: var(--danger-soft); color: var(--danger); }
+
+    button.trip-badge {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      line-height: 1.4;
+    }
 
     .delete-btn {
       border: none;
-      background: #fee2e2;
-      color: #dc2626;
-      font-size: 14px;
-      font-weight: bold;
-      width: 30px;
-      height: 30px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 15px;
+      font-weight: 600;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       cursor: pointer;
-      margin-left: 8px;
+      margin-left: 4px;
       flex: none;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .delete-btn:hover { background: #fecaca; }
+    .delete-btn:hover { background: var(--danger-soft); color: var(--danger); }
 
     .pay-btn {
       border: none;
-      background: #e0f2fe;
-      color: #0369a1;
-      font-size: 13px;
-      font-weight: bold;
-      padding: 6px 10px;
-      border-radius: 20px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 6px 12px;
+      border-radius: 999px;
       cursor: pointer;
       flex: none;
-      margin-left: 6px;
+      margin-left: 4px;
+      transition: background 0.15s ease;
     }
 
-    .pay-btn:hover { background: #bae6fd; }
+    .pay-btn:hover { background: #ccfbf1; }
 
     .edit-btn {
       border: none;
-      background: #f1f5f9;
-      color: #475569;
-      font-size: 14px;
-      font-weight: bold;
-      width: 30px;
-      height: 30px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 15px;
+      font-weight: 600;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       cursor: pointer;
-      margin-left: 6px;
+      margin-left: 4px;
       flex: none;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .edit-btn:hover { background: #e2e8f0; }
+    .edit-btn:hover { background: #f1f5f9; color: var(--text); }
 
     .cancel-btn {
       width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #f1f5f9;
-      color: #334155;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text-secondary);
       cursor: pointer;
       margin-top: 8px;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .cancel-btn:hover { background: #e2e8f0; }
+    .cancel-btn:hover { background: #f8fafc; color: var(--text); }
 
-    .form-msg.ok { color: #15803d; }
+    .form-msg.ok { color: var(--success); }
 
     .filtros {
       display: flex;
@@ -302,18 +397,25 @@
     .filtro-btn {
       flex: 1;
       padding: 8px;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
       font-size: 13px;
-      font-weight: bold;
-      background: #f8fafc;
-      color: #334155;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text-secondary);
       cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filtro-btn:hover {
+      border-color: var(--border-strong);
+      color: var(--text);
     }
 
     .filtro-btn.selected {
-      background: #0f766e;
-      border-color: #0f766e;
+      background: var(--primary);
+      border-color: var(--primary);
       color: #fff;
     }
 
@@ -324,27 +426,23 @@
       margin-bottom: 12px;
     }
 
-    .filtro-mes input[type="month"] {
-      flex: 1;
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background: #f8fafc;
-    }
+    .filtro-mes input[type="month"] { flex: 1; }
 
     .filtro-limpiar {
-      border: none;
-      background: #e2e8f0;
-      color: #334155;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
       font-size: 13px;
-      font-weight: bold;
+      font-weight: 600;
+      font-family: inherit;
       padding: 8px 12px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .filtro-limpiar:hover { background: #cbd5e1; }
+    .filtro-limpiar:hover { background: #f8fafc; color: var(--text); }
 
     .pay-control {
       display: flex;
@@ -356,33 +454,36 @@
 
     .pay-input {
       width: 76px;
-      padding: 6px;
+      padding: 6px 8px;
       font-size: 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      background: #f8fafc;
     }
 
     .pay-ok {
       border: none;
-      background: #15803d;
+      background: var(--primary);
       color: #fff;
-      font-weight: bold;
+      font-weight: 600;
+      font-family: inherit;
       padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
+      transition: background 0.15s ease;
     }
 
+    .pay-ok:hover { background: var(--primary-hover); }
+
     .abono-line {
-      font-size: 13px;
-      color: #0369a1;
-      font-weight: bold;
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 4px;
     }
 
     .empty {
       text-align: center;
-      color: #e2e8f0;
-      padding: 20px;
+      color: var(--text-muted);
+      padding: 24px 16px;
+      font-size: 14px;
     }
 
     .login-screen {
@@ -396,36 +497,30 @@
     .login-screen[hidden] { display: none; }
 
     .auth-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
       width: 100%;
       max-width: 360px;
     }
 
     .auth-card h1 {
-      color: #0f766e;
-      margin-bottom: 16px;
+      color: var(--text);
+      font-size: 20px;
+      margin-bottom: 20px;
     }
 
     .auth-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #334155;
-      margin-bottom: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
       text-align: center;
     }
 
-    .auth-card input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background: #f8fafc;
-      margin-bottom: 12px;
-    }
+    .auth-card input { margin-bottom: 12px; }
 
     .password-wrapper {
       position: relative;
@@ -437,56 +532,60 @@
 
     .password-toggle {
       position: absolute;
-      right: 6px;
+      right: 8px;
       top: 50%;
       transform: translateY(-50%);
       border: none;
       background: none;
       cursor: pointer;
       padding: 4px;
-      color: #64748b;
+      color: var(--text-muted);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: color 0.15s ease;
     }
 
-    .password-toggle:hover { color: #0f766e; }
+    .password-toggle:hover { color: var(--primary); }
 
     .auth-btn {
       width: 100%;
       padding: 12px;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
       margin-bottom: 10px;
+      transition: background 0.15s ease;
     }
 
     .auth-btn.primary {
-      background: #0f766e;
+      background: var(--primary);
       color: #fff;
     }
 
-    .auth-btn.primary:hover { background: #0d5e58; }
+    .auth-btn.primary:hover { background: var(--primary-hover); }
     .auth-btn.primary:disabled { opacity: 0.6; cursor: wait; }
 
     .auth-btn.secondary {
-      background: #f1f5f9;
-      color: #334155;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
     }
 
-    .auth-btn.secondary:hover { background: #e2e8f0; }
+    .auth-btn.secondary:hover { background: var(--surface); color: var(--text); }
 
     .auth-message {
       min-height: 20px;
       font-size: 14px;
-      color: #dc2626;
-      margin-bottom: 10px;
+      color: var(--danger);
+      margin-bottom: 12px;
       text-align: center;
     }
 
-    .auth-message.ok { color: #15803d; }
+    .auth-message.ok { color: var(--success); }
 
     .header-actions {
       display: flex;
@@ -501,142 +600,199 @@
     }
 
     .menu-option {
-      background: #fff;
-      border: none;
-      border-radius: 12px;
-      padding: 22px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 18px;
       text-align: left;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      font-family: inherit;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .menu-option:hover {
-      background: #f0fdfa;
-      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow);
     }
 
     .menu-option .menu-icon {
       display: block;
-      font-size: 26px;
-      margin-bottom: 8px;
+      font-size: 24px;
+      margin-bottom: 10px;
+      opacity: 0.9;
     }
 
     .menu-option .menu-title {
       display: block;
-      font-size: 18px;
-      font-weight: bold;
-      color: #0f766e;
-      letter-spacing: 1px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.3px;
     }
 
     .menu-option .menu-sub {
       display: block;
       font-size: 13px;
-      color: #64748b;
+      color: var(--text-secondary);
       margin-top: 4px;
     }
 
     .menu-balance {
-      background: #fff;
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
     }
 
     .menu-balance-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .menu-balance-label {
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      color: var(--text-secondary);
     }
 
     .balance-toggle {
-      border: none;
-      background: #f1f5f9;
-      color: #334155;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 600;
+      font-family: inherit;
       padding: 5px 12px;
-      border-radius: 20px;
+      border-radius: 999px;
       cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .balance-toggle:hover { background: #e2e8f0; }
+    .balance-toggle:hover { background: #f8fafc; color: var(--text); }
 
     .menu-balance-amount {
       display: block;
-      font-size: 34px;
-      font-weight: bold;
-      color: #0f766e;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
     }
 
-    .menu-balance-amount.negativo { color: #dc2626; }
+    .menu-balance-amount.negativo { color: var(--danger); }
+
+    .menu-balance-badge {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .cliente-list {
+      list-style: none;
+    }
+
+    .cliente-item {
+      background: var(--surface);
+      border: 2px solid #000;
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .cliente-item:hover {
+      border-color: #000;
+      box-shadow: var(--shadow);
+    }
+
+    .cliente-empresa {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .cliente-meta {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .cliente-deuda {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--danger);
+      margin-top: 6px;
+    }
+
+    .cliente-deuda.sin-deuda { color: var(--success); }
 
     .trip-empresa {
-      font-size: 13px;
-      color: #0f766e;
-      font-weight: bold;
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 600;
       margin-bottom: 2px;
     }
 
     .trip-date {
-      font-size: 13px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-
-    .trip-gastos {
-      font-size: 13px;
-      font-weight: bold;
+      font-size: 12px;
+      color: var(--text-secondary);
       margin-top: 4px;
     }
 
-    .trip-gastos.positivo { color: #15803d; }
-    .trip-gastos.negativo { color: #dc2626; }
+    .trip-gastos {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .trip-gastos.positivo { color: var(--success); }
+    .trip-gastos.negativo { color: var(--danger); }
 
     .card h2 {
-      color: #334155;
-      margin-bottom: 6px;
+      color: var(--text);
+      margin-bottom: 8px;
     }
 
     .gasto-resumen {
-      background: #fff7ed;
-      border: 2px solid #f59e0b;
-      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid #fcd34d;
+      border-radius: var(--radius);
       padding: 16px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-sm);
       margin-bottom: 16px;
     }
 
     .gasto-resumen .amount {
       display: block;
-      font-size: 28px;
-      font-weight: bold;
-      color: #b45309;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: -0.3px;
     }
 
     .gasto-resumen .label {
-      font-size: 13px;
-      letter-spacing: 1px;
-      color: #b45309;
-      opacity: 0.75;
+      font-size: 12px;
+      letter-spacing: 0.6px;
+      color: var(--amber);
     }
 
     .cat-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 7px 0;
-      border-bottom: 1px solid #f1f5f9;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
       font-size: 14px;
     }
 
@@ -646,8 +802,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-weight: bold;
-      color: #334155;
+      font-weight: 600;
+      color: var(--text);
     }
 
     .cat-dot {
@@ -658,30 +814,23 @@
     }
 
     .cat-amount {
-      font-weight: bold;
-      color: #334155;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .buscador {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background: #f8fafc;
-      margin-bottom: 12px;
-    }
+    .buscador { margin-bottom: 12px; }
 
     .auth-link {
       display: block;
       width: 100%;
       border: none;
       background: none;
-      color: #0f766e;
+      color: var(--primary);
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       text-align: center;
     }
 
@@ -690,7 +839,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(15, 23, 42, 0.5);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -701,26 +850,26 @@
     .modal-overlay[hidden] { display: none; }
 
     .modal-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
       width: 100%;
       max-width: 340px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-lg);
       text-align: center;
     }
 
     .modal-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #334155;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
       margin-bottom: 8px;
     }
 
     .modal-text {
       font-size: 14px;
-      color: #64748b;
-      margin-bottom: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
     }
 
     .modal-buttons {
@@ -732,25 +881,132 @@
       flex: 1;
       padding: 11px;
       border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: bold;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
+      transition: background 0.15s ease;
     }
 
     .modal-btn.cancel {
-      background: #f1f5f9;
-      color: #334155;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
     }
 
-    .modal-btn.cancel:hover { background: #e2e8f0; }
+    .modal-btn.cancel:hover { background: var(--surface); color: var(--text); }
 
     .modal-btn.danger {
-      background: #dc2626;
+      background: var(--danger);
       color: #fff;
     }
 
     .modal-btn.danger:hover { background: #b91c1c; }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title h2 { margin-bottom: 0; }
+
+    .csv-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .csv-btn:hover {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: #99f6e4;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: #99f6e4;
+    }
+
+    .export-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .export-actions .csv-btn { flex: 1; }
+
+    .check-list {
+      list-style: none;
+    }
+
+    .check-row {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .check-row:last-child { border-bottom: none; }
+
+    .check-row label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .check-row input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      margin-top: 1px;
+      flex: none;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .cuenta-email {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      text-align: center;
+      word-break: break-all;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
@@ -787,7 +1043,15 @@
   <div class="app" id="menuScreen" hidden>
     <div class="header">
       <h1>Viajes y Cobros</h1>
-      <button class="logout-btn" id="menuLogoutBtn">Salir</button>
+      <div class="header-actions">
+        <button type="button" class="icon-btn" id="menuCuentaBtn" title="Mi cuenta" aria-label="Mi cuenta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button type="button" class="icon-btn" id="menuDescargasBtn" title="Descargas" aria-label="Descargas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="logout-btn" id="menuLogoutBtn">Salir</button>
+      </div>
     </div>
 
     <div class="menu-balance">
@@ -809,7 +1073,116 @@
         <span class="menu-title">MIS GASTOS</span>
         <span class="menu-sub">Lleva el control de tus gastos</span>
       </button>
+      <button type="button" class="menu-option" id="menuClientesBtn">
+        <span class="menu-icon">🏢</span>
+        <span class="menu-title">CLIENTES</span>
+        <span class="menu-sub">Deudas y cobranzas</span>
+      </button>
     </div>
+  </div>
+
+  <div class="app" id="cuentaScreen" hidden>
+    <div class="header">
+      <h1>Mi Cuenta</h1>
+      <button class="logout-btn" id="cuentaBackBtn">Menú</button>
+    </div>
+
+    <div class="card">
+      <h2>Perfil</h2>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <div class="cuenta-email" id="cuentaEmail">-</div>
+      </div>
+      <div class="form-msg" id="cuentaCerrarMsg"></div>
+      <button type="button" class="cancel-btn" id="cuentaCerrarOtros">Cerrar sesión en otros dispositivos</button>
+    </div>
+
+    <form class="card" id="cuentaForm">
+      <h2>Cambiar contraseña</h2>
+      <div class="form-group">
+        <label for="cuentaActual">Contraseña actual</label>
+        <div class="password-wrapper">
+          <input type="password" id="cuentaActual" autocomplete="current-password">
+          <button type="button" class="password-toggle" id="cuentaToggleActual" aria-label="Mostrar contraseña">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cuentaNueva">Nueva contraseña</label>
+        <div class="password-wrapper">
+          <input type="password" id="cuentaNueva" autocomplete="new-password">
+          <button type="button" class="password-toggle" id="cuentaToggleNueva" aria-label="Mostrar contraseña">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cuentaConfirmar">Confirmar nueva contraseña</label>
+        <div class="password-wrapper">
+          <input type="password" id="cuentaConfirmar" autocomplete="new-password">
+          <button type="button" class="password-toggle" id="cuentaToggleConfirmar" aria-label="Mostrar contraseña">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="form-msg" id="cuentaMsg"></div>
+      <button type="submit" class="add-btn" id="cuentaSubmit">Guardar contraseña</button>
+    </form>
+  </div>
+
+  <div class="app" id="descargasScreen" hidden>
+    <div class="header">
+      <h1>Descargas</h1>
+      <button class="logout-btn" id="descargasBackBtn">Menú</button>
+    </div>
+
+    <div class="card">
+      <h2>Seleccioná qué descargar</h2>
+      <div class="form-group">
+        <label for="descargasTipo">Tipo</label>
+        <select id="descargasTipo">
+          <option value="viajes">Solo viajes</option>
+          <option value="gastos">Solo gastos</option>
+          <option value="todos">Viajes y gastos</option>
+        </select>
+      </div>
+      <div class="export-actions">
+        <button type="button" class="csv-btn" id="descargasTodos">Seleccionar todos</button>
+        <button type="button" class="csv-btn" id="descargasNinguno">Quitar todos</button>
+      </div>
+    </div>
+
+    <div class="card" id="descargasViajesCard">
+      <h2>Viajes</h2>
+      <ul class="check-list" id="descargasViajes"></ul>
+    </div>
+
+    <div class="card" id="descargasGastosCard">
+      <h2>Gastos</h2>
+      <ul class="check-list" id="descargasGastos"></ul>
+    </div>
+
+    <button type="button" class="add-btn" id="descargasBtn">Descargar seleccionados</button>
+    <div class="form-msg" id="descargasMsg"></div>
+  </div>
+
+  <div class="app" id="clientesScreen" hidden>
+    <div class="header">
+      <h1>Clientes</h1>
+      <button class="logout-btn" id="clientesBackBtn">Menú</button>
+    </div>
+
+    <div class="menu-balance">
+      <div class="menu-balance-header">
+        <span class="menu-balance-label">DEUDA TOTAL</span>
+        <span class="menu-balance-badge" id="clientesConDeuda">0 clientes</span>
+      </div>
+      <span class="menu-balance-amount" id="clientesDeudaTotal">$0</span>
+    </div>
+
+    <input type="text" id="clientesBuscador" class="buscador" placeholder="Buscar cliente...">
+    <ul class="cliente-list" id="clientesList"></ul>
   </div>
 
   <div class="app" id="gastosScreen" hidden>
@@ -867,7 +1240,10 @@
     </form>
     <div class="form-msg" id="gastoMsg"></div>
 
-    <h2>Gastos</h2>
+    <div class="section-title">
+      <h2>Gastos</h2>
+      <button type="button" class="csv-btn" id="gastosExportBtn">Descargar CSV</button>
+    </div>
     <select id="gastoFiltroCategoria" class="buscador">
       <option value="">Todas las categorías</option>
       <option value="combustible">Combustible</option>
@@ -940,7 +1316,10 @@
     </form>
     <div class="form-msg" id="viajeMsg"></div>
 
-    <h2>Viajes</h2>
+    <div class="section-title">
+      <h2>Viajes</h2>
+      <button type="button" class="csv-btn" id="viajesExportBtn">Descargar CSV</button>
+    </div>
     <input type="text" id="buscador" class="buscador" placeholder="Buscar por ruta o empresa...">
     <div class="filtros">
       <button type="button" class="filtro-btn selected" data-filtro-estado="todos">Todos</button>
@@ -1064,6 +1443,42 @@
     const filtroBtns = document.querySelectorAll('.filtro-btn');
     const filtroMesInput = document.getElementById('filtroMes');
     const filtroMesLimpiar = document.getElementById('filtroMesLimpiar');
+    const cuentaScreen = document.getElementById('cuentaScreen');
+    const cuentaBackBtn = document.getElementById('cuentaBackBtn');
+    const cuentaEmail = document.getElementById('cuentaEmail');
+    const cuentaActual = document.getElementById('cuentaActual');
+    const cuentaNueva = document.getElementById('cuentaNueva');
+    const cuentaConfirmar = document.getElementById('cuentaConfirmar');
+    const cuentaForm = document.getElementById('cuentaForm');
+    const cuentaMsg = document.getElementById('cuentaMsg');
+    const cuentaSubmit = document.getElementById('cuentaSubmit');
+    const cuentaCerrarOtros = document.getElementById('cuentaCerrarOtros');
+    const cuentaCerrarMsg = document.getElementById('cuentaCerrarMsg');
+    const menuCuentaBtn = document.getElementById('menuCuentaBtn');
+    const menuDescargasBtn = document.getElementById('menuDescargasBtn');
+    const descargasScreen = document.getElementById('descargasScreen');
+    const descargasBackBtn = document.getElementById('descargasBackBtn');
+    const descargasTipo = document.getElementById('descargasTipo');
+    const descargasViajes = document.getElementById('descargasViajes');
+    const descargasGastos = document.getElementById('descargasGastos');
+    const descargasViajesCard = document.getElementById('descargasViajesCard');
+    const descargasGastosCard = document.getElementById('descargasGastosCard');
+    const descargasTodos = document.getElementById('descargasTodos');
+    const descargasNinguno = document.getElementById('descargasNinguno');
+    const descargasBtn = document.getElementById('descargasBtn');
+    const descargasMsg = document.getElementById('descargasMsg');
+    const viajesExportBtn = document.getElementById('viajesExportBtn');
+    const gastosExportBtn = document.getElementById('gastosExportBtn');
+    const cuentaToggleActual = document.getElementById('cuentaToggleActual');
+    const cuentaToggleNueva = document.getElementById('cuentaToggleNueva');
+    const cuentaToggleConfirmar = document.getElementById('cuentaToggleConfirmar');
+    const menuClientesBtn = document.getElementById('menuClientesBtn');
+    const clientesScreen = document.getElementById('clientesScreen');
+    const clientesBackBtn = document.getElementById('clientesBackBtn');
+    const clientesDeudaTotal = document.getElementById('clientesDeudaTotal');
+    const clientesConDeuda = document.getElementById('clientesConDeuda');
+    const clientesBuscador = document.getElementById('clientesBuscador');
+    const clientesList = document.getElementById('clientesList');
 
     function money(n) {
       const partes = Number(n).toFixed(2).split('.');
@@ -1098,6 +1513,76 @@
     function precioAInput(n) {
       const s = Number(n).toFixed(2).split('.');
       return formatPrecioInput(s[0]) + ',' + s[1];
+    }
+
+    function numeroCSV(n) {
+      return Number(n).toFixed(2).replace('.', ',');
+    }
+
+    function campoCSV(v) {
+      const s = String(v == null ? '' : v);
+      if (/[;"\n]/.test(s)) {
+        return '"' + s.replace(/"/g, '""') + '"';
+      }
+      return s;
+    }
+
+    function descargarCSV(nombre, filas) {
+      const contenido = '\uFEFF' + filas.map(function (f) {
+        return f.map(campoCSV).join(';');
+      }).join('\r\n');
+      const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = nombre;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }
+
+    function exportarViajesCSV(ids) {
+      const lista = (ids && ids.length > 0)
+        ? viajes.filter(function (v) { return v && ids.indexOf(v.id) !== -1; })
+        : viajes;
+      const filas = [['Fecha', 'Empresa', 'Ruta', 'Precio', 'Abono', 'Estado', 'Saldo pendiente']];
+      lista.forEach(function (v) {
+        if (!v) return;
+        const abono = Math.min(v.abono || 0, v.precio);
+        const saldo = v.estado === 'cobrado' ? 0 : (v.precio - abono);
+        filas.push([
+          v.fecha || '',
+          v.empresa || '',
+          v.ruta || '',
+          numeroCSV(v.precio),
+          numeroCSV(v.estado === 'cobrado' ? v.precio : abono),
+          v.estado === 'cobrado' ? 'Cobrado' : 'Pendiente',
+          numeroCSV(saldo)
+        ]);
+      });
+      descargarCSV('viajes.csv', filas);
+    }
+
+    function exportarGastosCSV(ids) {
+      const lista = (ids && ids.length > 0)
+        ? gastos.filter(function (g) { return g && ids.indexOf(g.id) !== -1; })
+        : gastos;
+      const filas = [['Fecha', 'Descripción', 'Categoría', 'Monto', 'Viaje asociado']];
+      lista.forEach(function (g) {
+        if (!g) return;
+        const viaje = viajes.find(function (v) { return v.id === g.viaje_id; });
+        let viajeTexto = '';
+        if (viaje) viajeTexto = viaje.ruta + (viaje.empresa ? ' · ' + viaje.empresa : '');
+        filas.push([
+          g.fecha || '',
+          g.descripcion || '',
+          CATEGORIAS[g.categoria] || CATEGORIAS.otros,
+          numeroCSV(g.monto),
+          viajeTexto
+        ]);
+      });
+      descargarCSV('gastos.csv', filas);
     }
 
     function mostrarMsg(el, texto, ok) {
@@ -1227,6 +1712,9 @@
       menuScreen.hidden = true;
       app.hidden = true;
       gastosScreen.hidden = true;
+      cuentaScreen.hidden = true;
+      descargasScreen.hidden = true;
+      clientesScreen.hidden = true;
     }
 
     function showLogin() {
@@ -1267,6 +1755,221 @@
       ocultarPantallas();
       gastosScreen.hidden = false;
       cargarViajes();
+    }
+
+    async function showCuenta() {
+      ocultarPantallas();
+      cuentaScreen.hidden = false;
+      cuentaMsg.textContent = '';
+      cuentaCerrarMsg.textContent = '';
+      const { data: { user } } = await supabase.auth.getUser();
+      cuentaEmail.textContent = (user && user.email) ? user.email : '-';
+    }
+
+    function showDescargas() {
+      ocultarPantallas();
+      descargasScreen.hidden = false;
+      descargasMsg.textContent = '';
+      renderDescargas();
+    }
+
+    function showClientes() {
+      ocultarPantallas();
+      clientesScreen.hidden = false;
+      clientesBuscador.value = '';
+      renderClientes('');
+    }
+
+    function renderClientes(filtro) {
+      const porEmpresa = {};
+      viajes.forEach(function (v) {
+        if (!v) return;
+        const empresa = String(v.empresa || '').trim();
+        if (!empresa) return;
+        if (!porEmpresa[empresa]) {
+          porEmpresa[empresa] = { viajes: 0, cobrado: 0, deuda: 0 };
+        }
+        const abono = Math.min(v.abono || 0, v.precio);
+        porEmpresa[empresa].viajes += 1;
+        if (v.estado === 'cobrado') {
+          porEmpresa[empresa].cobrado += Number(v.precio) || 0;
+        } else {
+          porEmpresa[empresa].cobrado += abono;
+          porEmpresa[empresa].deuda += (Number(v.precio) || 0) - abono;
+        }
+      });
+
+      const lista = Object.keys(porEmpresa)
+        .map(function (empresa) {
+          return { empresa: empresa, datos: porEmpresa[empresa] };
+        })
+        .filter(function (c) {
+          if (!filtro) return true;
+          const f = filtro.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          const e = c.empresa.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          return e.indexOf(f) !== -1;
+        })
+        .sort(function (a, b) {
+          return b.datos.deuda - a.datos.deuda;
+        });
+
+      let deudaTotal = 0;
+      let clientesConDeuda = 0;
+      Object.keys(porEmpresa).forEach(function (empresa) {
+        const d = porEmpresa[empresa].deuda;
+        deudaTotal += d;
+        if (d > 0) clientesConDeuda += 1;
+      });
+      clientesDeudaTotal.textContent = money(deudaTotal);
+      clientesConDeuda.textContent = clientesConDeuda + (clientesConDeuda === 1 ? ' cliente' : ' clientes');
+
+      clientesList.innerHTML = '';
+      if (lista.length === 0) {
+        clientesList.innerHTML = '<li class="empty">Aún no hay clientes registrados</li>';
+        return;
+      }
+
+      lista.forEach(function (c) {
+        const li = document.createElement('li');
+        li.className = 'cliente-item';
+
+        const empresa = document.createElement('div');
+        empresa.className = 'cliente-empresa';
+        empresa.textContent = c.empresa;
+
+        const meta = document.createElement('div');
+        meta.className = 'cliente-meta';
+        meta.textContent = c.datos.viajes + (c.datos.viajes === 1 ? ' viaje' : ' viajes') + ' · Cobrado ' + money(c.datos.cobrado);
+
+        const deuda = document.createElement('div');
+        deuda.className = 'cliente-deuda' + (c.datos.deuda === 0 ? ' sin-deuda' : '');
+        deuda.textContent = c.datos.deuda > 0 ? 'Deuda: ' + money(c.datos.deuda) : 'Sin deuda';
+
+        li.appendChild(empresa);
+        li.appendChild(meta);
+        li.appendChild(deuda);
+
+        li.addEventListener('click', function () {
+          verCliente(c.empresa);
+        });
+
+        clientesList.appendChild(li);
+      });
+    }
+
+    function verCliente(empresa) {
+      busqueda = empresa;
+      buscadorInput.value = empresa;
+      filtroEstado = 'todos';
+      filtroBtns.forEach(function (b) {
+        b.classList.toggle('selected', b.dataset.filtroEstado === 'todos');
+      });
+      filtroMes = '';
+      filtroMesInput.value = '';
+      showViajes();
+    }
+
+    function renderDescargas() {
+      descargasViajes.innerHTML = '';
+      descargasGastos.innerHTML = '';
+
+      if (viajes.length === 0) {
+        descargasViajes.innerHTML = '<li class="empty">No hay viajes para descargar</li>';
+      } else {
+        viajes.forEach(function (v) {
+          if (!v) return;
+          const li = document.createElement('li');
+          li.className = 'check-row';
+          const label = document.createElement('label');
+          const cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.value = v.id;
+          const span = document.createElement('span');
+          let texto = v.ruta + (v.empresa ? ' · ' + v.empresa : '') + ' · ' + money(v.precio);
+          if (v.fecha) texto = formatFecha(v.fecha) + ' — ' + texto;
+          span.textContent = texto;
+          label.appendChild(cb);
+          label.appendChild(span);
+          li.appendChild(label);
+          descargasViajes.appendChild(li);
+        });
+      }
+
+      if (gastos.length === 0) {
+        descargasGastos.innerHTML = '<li class="empty">No hay gastos para descargar</li>';
+      } else {
+        gastos.forEach(function (g) {
+          if (!g) return;
+          const viaje = viajes.find(function (v) { return v.id === g.viaje_id; });
+          const li = document.createElement('li');
+          li.className = 'check-row';
+          const label = document.createElement('label');
+          const cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.value = g.id;
+          const span = document.createElement('span');
+          let texto = g.descripcion + ' · ' + money(g.monto);
+          if (viaje) texto += ' · ' + viaje.ruta;
+          if (g.fecha) texto = formatFecha(g.fecha) + ' — ' + texto;
+          span.textContent = texto;
+          label.appendChild(cb);
+          label.appendChild(span);
+          li.appendChild(label);
+          descargasGastos.appendChild(li);
+        });
+      }
+
+      actualizarVisibilidadDescargas();
+    }
+
+    function actualizarVisibilidadDescargas() {
+      const tipo = descargasTipo.value;
+      descargasViajesCard.style.display = (tipo === 'viajes' || tipo === 'todos') ? '' : 'none';
+      descargasGastosCard.style.display = (tipo === 'gastos' || tipo === 'todos') ? '' : 'none';
+    }
+
+    function marcarLista(listId, estado) {
+      const checks = document.querySelectorAll('#' + listId + ' input[type="checkbox"]');
+      checks.forEach(function (c) { c.checked = estado; });
+    }
+
+    function marcarTodos(estado) {
+      const tipo = descargasTipo.value;
+      if (tipo === 'viajes' || tipo === 'todos') marcarLista('descargasViajes', estado);
+      if (tipo === 'gastos' || tipo === 'todos') marcarLista('descargasGastos', estado);
+    }
+
+    function idsChequeados(listId) {
+      const ids = [];
+      const checks = document.querySelectorAll('#' + listId + ' input[type="checkbox"]:checked');
+      checks.forEach(function (c) { ids.push(c.value); });
+      return ids;
+    }
+
+    function descargarSeleccion() {
+      const tipo = descargasTipo.value;
+      const vIds = idsChequeados('descargasViajes');
+      const gIds = idsChequeados('descargasGastos');
+      if (tipo === 'viajes') {
+        if (vIds.length === 0) {
+          mostrarMsg(descargasMsg, 'Elegí al menos un viaje.', false);
+          return;
+        }
+        exportarViajesCSV(vIds);
+      } else if (tipo === 'gastos') {
+        if (gIds.length === 0) {
+          mostrarMsg(descargasMsg, 'Elegí al menos un gasto.', false);
+          return;
+        }
+        exportarGastosCSV(gIds);
+      } else {
+        if (vIds.length === 0 && gIds.length === 0) {
+          mostrarMsg(descargasMsg, 'Elegí al menos un elemento.', false);
+          return;
+        }
+        if (vIds.length > 0) exportarViajesCSV(vIds);
+        if (gIds.length > 0) setTimeout(function () { exportarGastosCSV(gIds); }, 400);
+      }
     }
 
     const BALANCE_OCULTO_KEY = 'balance_oculto';
@@ -1440,9 +2143,15 @@
           info.appendChild(gastosLine);
         }
 
-        const badge = document.createElement('span');
+        const badge = document.createElement('button');
+        badge.type = 'button';
         badge.className = 'trip-badge ' + v.estado;
+        badge.title = v.estado === 'cobrado' ? 'Marcar como pendiente' : 'Marcar como cobrado';
         badge.textContent = v.estado === 'cobrado' ? 'Cobrado' : 'Pendiente';
+        badge.addEventListener('click', function (e) {
+          e.stopPropagation();
+          actualizarViaje(v.id, { estado: v.estado === 'cobrado' ? 'pendiente' : 'cobrado' });
+        });
 
         const del = document.createElement('button');
         del.className = 'delete-btn';
@@ -1508,10 +2217,6 @@
 
         li.appendChild(edit);
         li.appendChild(del);
-        li.addEventListener('click', function () {
-          const nuevo = v.estado === 'cobrado' ? 'pendiente' : 'cobrado';
-          actualizarViaje(v.id, { estado: nuevo });
-        });
         tripList.appendChild(li);
       });
     }
@@ -1903,6 +2608,10 @@
       render();
     });
 
+    clientesBuscador.addEventListener('input', function () {
+      renderClientes(this.value.trim());
+    });
+
     confirmCancel.addEventListener('click', function () {
       confirmModal.hidden = true;
       confirmarAccion = null;
@@ -1975,6 +2684,8 @@
 
     menuViajesBtn.addEventListener('click', showViajes);
     menuGastosBtn.addEventListener('click', showGastos);
+    menuClientesBtn.addEventListener('click', function () { showClientes(); });
+    clientesBackBtn.addEventListener('click', showMenu);
     backToMenuBtn.addEventListener('click', showMenu);
     gastosBackBtn.addEventListener('click', showMenu);
 
@@ -2010,6 +2721,94 @@
     gastoFiltroCategoria.addEventListener('change', function () {
       filtroGastoCategoria = this.value;
       renderGastos();
+    });
+
+    menuDescargasBtn.addEventListener('click', showDescargas);
+    descargasBackBtn.addEventListener('click', showMenu);
+    descargasTipo.addEventListener('change', actualizarVisibilidadDescargas);
+    descargasTodos.addEventListener('click', function () { marcarTodos(true); });
+    descargasNinguno.addEventListener('click', function () { marcarTodos(false); });
+    descargasBtn.addEventListener('click', descargarSeleccion);
+    viajesExportBtn.addEventListener('click', exportarViajesCSV);
+    gastosExportBtn.addEventListener('click', exportarGastosCSV);
+
+    menuCuentaBtn.addEventListener('click', showCuenta);
+    cuentaBackBtn.addEventListener('click', showMenu);
+
+    function togglePasswordCampo(btn, input) {
+      btn.addEventListener('click', function () {
+        const esPassword = input.type === 'password';
+        input.type = esPassword ? 'text' : 'password';
+        btn.setAttribute('aria-label', esPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        btn.innerHTML = esPassword ? ojoCerrado : ojoAbierto;
+      });
+    }
+
+    togglePasswordCampo(cuentaToggleActual, cuentaActual);
+    togglePasswordCampo(cuentaToggleNueva, cuentaNueva);
+    togglePasswordCampo(cuentaToggleConfirmar, cuentaConfirmar);
+
+    cuentaForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      cuentaMsg.textContent = '';
+      const actual = cuentaActual.value;
+      const nueva = cuentaNueva.value;
+      const confirmar = cuentaConfirmar.value;
+      if (!actual || !nueva || !confirmar) {
+        mostrarMsg(cuentaMsg, 'Completá todos los campos.', false);
+        return;
+      }
+      if (nueva !== confirmar) {
+        mostrarMsg(cuentaMsg, 'La nueva contraseña no coincide en los dos campos.', false);
+        return;
+      }
+      if (nueva.length < 6) {
+        mostrarMsg(cuentaMsg, 'La contraseña debe tener al menos 6 caracteres.', false);
+        return;
+      }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user || !user.email) {
+        mostrarMsg(cuentaMsg, 'No se pudo verificar tu identidad.', false);
+        return;
+      }
+      cuentaSubmit.disabled = true;
+      try {
+        const { error: verifError } = await supabase.auth.signInWithPassword({ email: user.email, password: actual });
+        if (verifError) {
+          mostrarMsg(cuentaMsg, 'La contraseña actual es incorrecta.', false);
+          return;
+        }
+        const { error: upError } = await supabase.auth.updateUser({ password: nueva });
+        if (upError) {
+          mostrarMsg(cuentaMsg, msjError(upError), false);
+          return;
+        }
+        cuentaActual.value = '';
+        cuentaNueva.value = '';
+        cuentaConfirmar.value = '';
+        mostrarMsg(cuentaMsg, 'Contraseña actualizada correctamente.', true);
+      } catch (ex) {
+        mostrarMsg(cuentaMsg, 'Error: ' + (ex.message || ex), false);
+      } finally {
+        cuentaSubmit.disabled = false;
+      }
+    });
+
+    cuentaCerrarOtros.addEventListener('click', async function () {
+      cuentaCerrarMsg.textContent = '';
+      cuentaCerrarOtros.disabled = true;
+      try {
+        const { error } = await supabase.auth.signOut({ scope: 'others' });
+        if (error) {
+          mostrarMsg(cuentaCerrarMsg, msjError(error), false);
+          return;
+        }
+        mostrarMsg(cuentaCerrarMsg, 'Sesión cerrada en los otros dispositivos.', true);
+      } catch (ex) {
+        mostrarMsg(cuentaCerrarMsg, 'Error: ' + (ex.message || ex), false);
+      } finally {
+        cuentaCerrarOtros.disabled = false;
+      }
     });
 
     logoutBtn.addEventListener('click', async function () {
